@@ -1,6 +1,6 @@
 extends Node
 # Parses command line arguments
-# Currently very robust until https://github.com/godotengine/godot/pull/26213
+# Currently very robust until https://github.com/godotengine/godot/pull/44594
 
 
 var server: bool
