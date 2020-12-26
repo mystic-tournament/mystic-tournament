@@ -17,8 +17,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="MainMenu" parent="." instance=ExtResource( 4 )]
+
 [node name="Chat" parent="." instance=ExtResource( 3 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
-
-[node name="MainMenu" parent="." instance=ExtResource( 4 )]
