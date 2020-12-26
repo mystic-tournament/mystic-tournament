@@ -3,7 +3,7 @@
 [ext_resource path="res://ui/chat/chat.gd" type="Script" id=1]
 
 [sub_resource type="InputEventAction" id=1]
-action = "ui_accept"
+action = "ui_chat"
 
 [sub_resource type="ShortCut" id=2]
 shortcut = SubResource( 1 )
