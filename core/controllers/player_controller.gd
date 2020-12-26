@@ -15,6 +15,9 @@ const ABILITY_ACTIONS = [
 var _camera: PlayerCamera
 var _hud: HUD
 
+var _x_strength: float
+var _z_strength: float
+
 
 func _ready() -> void:
 	if is_network_master():
@@ -29,7 +32,20 @@ func _ready() -> void:
 		set_process_input(false)
 
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent):
+	if event.is_action("move_left"):
+		_x_strength = Input.get_action_strength("move_right") - event.get_action_strength("move_left")
+		return
+	if event.is_action("move_right"):
+		_x_strength = event.get_action_strength("move_right") - Input.get_action_strength("move_left")
+		return
+	if event.is_action("move_front"):
+		_z_strength = Input.get_action_strength("move_back") - event.get_action_strength("move_front")
+		return
+	if event.is_action("move_back"):
+		_z_strength = event.get_action_strength("move_back") - Input.get_action_strength("move_front")
+		return
+	
 	for index in ABILITY_ACTIONS.size():
 		if event.is_action_released(ABILITY_ACTIONS[index]) and character.can_use(index):
 			character.rpc("rotate_smoothly_to", _camera.rotation.y)
@@ -41,12 +57,9 @@ func _physics_process(delta: float) -> void:
 	if not input_enabled:
 		return
 
-	var x_strength: float = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	var z_strength: float = Input.get_action_strength("move_back") - Input.get_action_strength("move_front")
-
 	var direction := Vector3()
-	direction += _camera.global_transform.basis.x * x_strength
-	direction += _camera.global_transform.basis.z * z_strength
+	direction += _camera.global_transform.basis.x * _x_strength
+	direction += _camera.global_transform.basis.z * _z_strength
 	direction.y = 0
 
 	if direction != Vector3.ZERO:
