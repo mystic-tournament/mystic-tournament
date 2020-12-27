@@ -29,7 +29,7 @@ func _ready() -> void:
 		_hud.character = character
 	else:
 		set_physics_process(false)
-		set_process_input(false)
+		set_process_unhandled_input(false)
 
 
 func _unhandled_input(event: InputEvent):
