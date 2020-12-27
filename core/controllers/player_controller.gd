@@ -42,7 +42,7 @@ func _unhandled_input(event: InputEvent):
 	if event.is_action("move_back"):
 		_z_strength = event.get_action_strength("move_back") - Input.get_action_strength("move_front")
 		return
-	
+
 	for index in ABILITY_ACTIONS.size():
 		if event.is_action_released(ABILITY_ACTIONS[index]) and character.can_use(index):
 			character.rpc("rotate_smoothly_to", _camera.rotation.y)

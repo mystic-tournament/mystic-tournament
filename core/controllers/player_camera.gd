@@ -11,6 +11,7 @@ const ZOOM_SPEED := 0.5
 
 onready var _camera: Camera = $Camera
 
+
 func _ready() -> void:
 	if OS.is_window_focused():
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
