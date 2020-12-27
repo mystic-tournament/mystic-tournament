@@ -24,8 +24,8 @@ puppetsync func start_game() -> void:
 
 			var controller := PlayerController.new()
 			controller.set_network_master(player.id)
-			controller.character = hero
 			add_child(controller)
+			controller.character = hero
 	emit_signal("started")
 
 

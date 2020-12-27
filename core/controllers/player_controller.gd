@@ -22,11 +22,8 @@ var _z_strength: float
 func _ready() -> void:
 	if is_network_master():
 		_camera = load("res://core/controllers/player_camera.tscn").instance()
-		character.add_child(_camera)
-
 		_hud = load("res://ui/hud/hud.tscn").instance()
 		add_child(_hud)
-		_hud.character = character
 	else:
 		set_physics_process(false)
 		set_process_unhandled_input(false)
@@ -65,3 +62,17 @@ func _physics_process(delta: float) -> void:
 	if direction != Vector3.ZERO:
 		character.rpc("rotate_smoothly_to", _camera.rotation.y)
 	character.move(delta, direction.normalized(), Input.is_action_just_pressed("jump"))
+
+
+func set_character(new_character: BaseHero) -> void:
+	if character and is_network_master():
+		character.disconnect("health_changed", _hud, "set_health")
+		character.remove_child(_camera)
+
+	.set_character(new_character)
+
+	if is_network_master():
+		# warning-ignore:return_value_discarded
+		character.connect("health_changed", _hud, "set_health")
+		character.add_child(_camera)
+		_hud.reset_health(character.health, character.max_health)
