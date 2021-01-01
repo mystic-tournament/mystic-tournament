@@ -26,6 +26,11 @@ puppetsync func start_game() -> void:
 	emit_signal("started")
 
 
+func current_player() -> PlayerInfo:
+	var network_id: int = get_tree().get_network_unique_id()
+	return players[network_id]
+
+
 func respawn_time(level: int) -> int:
 	return level # TODO: Use formula
 

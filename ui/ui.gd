@@ -5,6 +5,7 @@ extends Control
 
 onready var _main_menu: MainMenu = $MainMenu
 onready var _chat: Chat = $Chat
+var _hud: HUD
 
 
 func _ready() -> void:
@@ -15,3 +16,6 @@ func _ready() -> void:
 func _on_session_started():
 	_main_menu.queue_free()
 	_chat.move_upper()
+
+	_hud = load("res://ui/hud/hud.tscn").instance()
+	add_child(_hud)
