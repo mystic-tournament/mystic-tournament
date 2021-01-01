@@ -43,11 +43,11 @@ func _unhandled_input(event: InputEvent):
 		_z_strength = event.get_action_strength("move_back") - Input.get_action_strength("move_front")
 		return
 
-	for index in ABILITY_ACTIONS.size():
-		if event.is_action_released(ABILITY_ACTIONS[index]) and character.can_use(index):
+	for i in ABILITY_ACTIONS.size():
+		if event.is_action_released(ABILITY_ACTIONS[i]) and character.can_use(i):
 			character.rpc("rotate_smoothly_to", _camera.rotation.y)
 			yield(get_tree().create_timer(character.get_rotation_time()), "timeout")
-			character.rpc("use_ability", index)
+			character.rpc("use_ability", i)
 
 
 func _physics_process(delta: float) -> void:

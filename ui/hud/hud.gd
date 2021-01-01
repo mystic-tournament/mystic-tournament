@@ -9,8 +9,8 @@ onready var _hp_bar: ValueBar = $VBox/HBox/HPBar
 
 
 func _ready() -> void:
-	for index in _abilities.get_child_count():
-		_abilities.get_child(index).set_action_index(index)
+	for i in _abilities.get_child_count():
+		_abilities.get_child(i).set_action_index(i)
 
 
 func set_health(health: int) -> void:

@@ -45,7 +45,7 @@ puppetsync func add_slots(slots) -> void:
 		for id in slots:
 			_create_slot(id)
 	else:
-		for _index in range(slots):
+		for _i in range(slots):
 			_create_slot(Slot.EMPTY_SLOT)
 	_update_text()
 
@@ -65,8 +65,8 @@ func size() -> int:
 	return _slots.size()
 
 
-func get_slot(slot_index: int) -> Slot:
-	return _slots[slot_index]
+func get_slot(idx: int) -> Slot:
+	return _slots[idx]
 
 
 func get_slot_ids() -> PoolIntArray:

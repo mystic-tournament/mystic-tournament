@@ -23,8 +23,8 @@ func create(teams_count: int, slots_count: int) -> void:
 	assert(slots_count >= 1, "The number of slots cannot be less than 1")
 	assert(teams_count >= 1, "The number of teams cannot be less than 1")
 
-	for index in range(teams_count):
-		if index == 0 and not CmdArguments.server:
+	for i in range(teams_count):
+		if i == 0 and not CmdArguments.server:
 			# The first team should contain the host if it is not a headless server
 			var slots: Array = [Slot.HOST] # TODO 4.0: Use array because of bug with resize in PoolIntArray (https://github.com/godotengine/godot/issues/31040)
 			slots.resize(slots_count) # Will filled with zeroes that corresponds to EMPTY_SLOT
@@ -58,7 +58,7 @@ func set_teams_count(count: int) -> void:
 		rpc("_truncate_teams", count)
 		return
 
-	for _index in range(_teams.size(), count):
+	for _i in range(_teams.size(), count):
 		rpc("_create_team", _teams.front().size())
 		# Must be called on the server separately, as this function is also used
 		# to send existing data to the connected client (therefore, cannot be marked as sync)
@@ -114,9 +114,9 @@ func _on_button_pressed(item: TreeItem, column: int, _button_idx: int) -> void:
 				emit_signal("player_kicked", wrapper.id)
 
 
-master func _join_team(team_index: int) -> void:
+master func _join_team(team_idx: int) -> void:
 	var previous_slot: Slot = _find_slot(get_tree().get_rpc_sender_id())
-	var new_slot = _teams[team_index].find_slot(Slot.EMPTY_SLOT)
+	var new_slot = _teams[team_idx].find_slot(Slot.EMPTY_SLOT)
 	if new_slot == null:
 		return
 	new_slot.rset("id", previous_slot.id)

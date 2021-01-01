@@ -3,7 +3,7 @@ extends KinematicBody
 
 
 signal died(sender, by)
-signal ability_changed(index, ability)
+signal ability_changed(idx, ability)
 signal health_changed(value)
 
 enum {
@@ -63,21 +63,21 @@ puppetsync func rotate_smoothly_to(y_radians: float) -> void:
 
 
 # TODO 4.0: Use BaseAbility type for ability (cyclic dependency)
-func set_ability(index: int, ability, spawn_position: Position3D) -> void:
-	_abilities[index] = ability
-	_abilities_spawn_positions[index] = spawn_position
-	emit_signal("ability_changed", index, ability)	
+func set_ability(idx: int, ability, spawn_position: Position3D) -> void:
+	_abilities[idx] = ability
+	_abilities_spawn_positions[idx] = spawn_position
+	emit_signal("ability_changed", idx, ability)
 
 
-func can_use(index: int) -> bool:
-	if not _abilities.has(index):
+func can_use(idx: int) -> bool:
+	if not _abilities.has(idx):
 		return false
 	return true # Check for cooldown
 
 
-puppetsync func use_ability(index: int) -> void:
-	if _abilities.has(index):
-		_abilities[index].use(self, _abilities_spawn_positions.get(index).global_transform)
+puppetsync func use_ability(idx: int) -> void:
+	if _abilities.has(idx):
+		_abilities[idx].use(self, _abilities_spawn_positions.get(idx).global_transform)
 
 
 func get_level() -> int:
