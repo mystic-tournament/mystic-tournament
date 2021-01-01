@@ -74,11 +74,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/hud/hud.gd"
 }, {
-"base": "Node",
-"class": "HeroInfo",
-"language": "GDScript",
-"path": "res://core/session/hero_info.gd"
-}, {
 "base": "Control",
 "class": "MainMenu",
 "language": "GDScript",
@@ -119,11 +114,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/main_menu/custom_game/teams_tree/team.gd"
 }, {
-"base": "Node",
-"class": "TeamInfo",
-"language": "GDScript",
-"path": "res://core/session/team_info.gd"
-}, {
 "base": "Tree",
 "class": "TeamsTree",
 "language": "GDScript",
@@ -163,7 +153,6 @@ _global_script_class_icons={
 "FloatingText": "",
 "FrostBolt": "",
 "HUD": "",
-"HeroInfo": "",
 "MainMenu": "",
 "Parameters": "",
 "PlayerCamera": "",
@@ -172,7 +161,6 @@ _global_script_class_icons={
 "ServerSettings": "",
 "Slot": "",
 "Team": "",
-"TeamInfo": "",
 "TeamsTree": "",
 "TreeItemWrapper": "",
 "UI": "",

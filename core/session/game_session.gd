@@ -4,28 +4,25 @@ extends Node
 signal started
 signal about_to_start
 
-var teams: Array
+var players: Dictionary # Contains player ids as keys and PlayerInfo as values
 var map: Node = preload("res://maps/workshop_plane.tscn").instance()
 
 
 puppetsync func start_game() -> void:
 	emit_signal("about_to_start")
 	var hero_scene: PackedScene = load("res://characters/ada/ada.tscn")
-	for team in teams:
-		for player in team.players:
-			if player.id == Slot.EMPTY_SLOT:
-				continue
+	for id in players:
+		var hero: Ada = hero_scene.instance()
+		hero.set_name("Player" + str(id))
+		# warning-ignore:return_value_discarded
+		hero.connect("died", self, "_on_hero_died")
+		map.add_child(hero)
 
-			var hero: Ada = hero_scene.instance()
-			hero.set_name("Player" + str(player.id))
-			# warning-ignore:return_value_discarded
-			hero.connect("died", self, "_on_hero_died")
-			map.add_child(hero)
-
-			var controller := PlayerController.new()
-			controller.set_network_master(player.id)
-			add_child(controller)
-			controller.character = hero
+		var controller := PlayerController.new()
+		players[id].controller = controller
+		controller.set_network_master(id)
+		add_child(controller)
+		controller.character = hero
 	emit_signal("started")
 
 

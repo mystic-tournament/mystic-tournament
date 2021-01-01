@@ -2,25 +2,13 @@ class_name PlayerInfo
 extends Node
 
 
-var heroes: Array
-var id: int
+var controller: BaseController
+var team: int
+var damage_done: int
+var healing_done: int
+var deaths: int
+var kills: int
 
 
-func _init(player_id: int) -> void:
-	id = player_id
-
-
-func get_damage_done() -> int:
-	return Utils.accumulate_property(heroes, "damage_done")
-
-
-func get_healing_done() -> int:
-	return Utils.accumulate_property(heroes, "healing_done")
-
-
-func get_deaths() -> int:
-	return Utils.accumulate_property(heroes, "deaths")
-
-
-func get_kills() -> int:
-	return Utils.accumulate_property(heroes, "kills")
+func _init(player_team: int) -> void:
+	team = player_team
