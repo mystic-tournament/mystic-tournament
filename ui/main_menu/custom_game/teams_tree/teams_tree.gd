@@ -151,9 +151,9 @@ func _is_teams_full() -> bool:
 
 
 func _set_session_data() -> void:
-	for team_idx in _teams.size():
-		var team: Team = _teams[team_idx];
+	for team in _teams:
 		for slot_idx in team.size():
 			var id: int = team.get_slot(slot_idx).id
-			if id != Slot.EMPTY_SLOT:
-				GameSession.players[id] = PlayerInfo.new(team_idx)
+			if id == Slot.EMPTY_SLOT:
+				break # All next slots will also be empty, skip to next team
+			GameSession.players[id] = PlayerInfo.new(team.team_number)
