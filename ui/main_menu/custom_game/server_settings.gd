@@ -27,12 +27,12 @@ func set_editable(editable: bool):
 	_teams_enabled.disabled = !editable
 	_slots_count.editable = editable
 	_teams_count.editable = editable
-	
+
 
 func get_teams_count() -> int:
 	if _teams_enabled.pressed:
 		return int(_teams_count.value)
-	return 0
+	return 1
 
 
 func get_slots_count() -> int:
@@ -41,7 +41,7 @@ func get_slots_count() -> int:
 
 func _on_teams_toggled(toggled: bool) -> void:
 	_teams_count_box.visible = toggled
-	_on_teams_count_changed(int(_teams_count.value) if toggled else 0)
+	_on_teams_count_changed(int(_teams_count.value) if toggled else 1)
 	if get_tree().has_network_peer() and get_tree().is_network_server():
 		_teams_enabled.rset("pressed", _teams_enabled.pressed)
 

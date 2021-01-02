@@ -2,7 +2,6 @@
 
 [ext_resource path="res://ui/main_menu/custom_game/server_settings.gd" type="Script" id=1]
 
-
 [node name="ServerSettings" type="PanelContainer"]
 margin_right = 178.0
 margin_bottom = 94.0

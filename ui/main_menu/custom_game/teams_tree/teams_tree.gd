@@ -28,7 +28,7 @@ func create(teams_count: int, slots_count: int) -> void:
 			# The first team should contain the host if it is not a headless server
 			var slots: Array = [Slot.HOST] # TODO 4.0: Use array because of bug with resize in PoolIntArray (https://github.com/godotengine/godot/issues/31040)
 			slots.resize(slots_count) # Will filled with zeroes that corresponds to EMPTY_SLOT
-			_create_team(PoolIntArray(slots))
+			_create_team(PoolIntArray(slots), Team.NO_TEAM_NUMBER if teams_count == 1 else 1)
 		else:
 			_create_team(slots_count)
 
@@ -94,8 +94,8 @@ func remove_disconnected_player(id: int) -> void:
 	slot.rset("id", Slot.EMPTY_SLOT)
 
 
-puppet func _create_team(slots) -> void:
-	var team := Team.new(self, _teams.size() + 1, slots)
+puppet func _create_team(slots, number: int = _teams.size() + 1) -> void:
+	var team := Team.new(self, number, slots)
 	if get_tree().is_network_server():
 		# warning-ignore:return_value_discarded
 		team.connect("filled_changed", self, "_check_if_filled_changed")
