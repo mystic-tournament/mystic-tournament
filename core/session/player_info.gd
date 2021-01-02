@@ -4,10 +4,11 @@ extends Node
 
 var controller: BaseController
 var team: int
-var damage_done: int
-var healing_done: int
-var deaths: int
 var kills: int
+var deaths: int
+var assists: int
+var damage: int
+var healing: int
 
 
 func _init(player_team: int) -> void:

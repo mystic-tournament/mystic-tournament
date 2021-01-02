@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/scoreboard/scoreboard.gd" type="Script" id=1]
+[ext_resource path="res://ui/scoreboard/scoreboard_tree.tscn" type="PackedScene" id=2]
+
+[node name="Scoreboard" type="WindowDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 300.0
+margin_top = 200.0
+margin_right = -300.0
+margin_bottom = -200.0
+script = ExtResource( 1 )
+
+[node name="Tree" parent="." instance=ExtResource( 2 )]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = -30.0
+margin_bottom = -30.0
