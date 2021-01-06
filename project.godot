@@ -67,7 +67,7 @@ _global_script_classes=[ {
 "base": "BaseAbility",
 "class": "FrostBolt",
 "language": "GDScript",
-"path": "res://characters/ada/abilities/frost_bolt.gd"
+"path": "res://characters/ada/abilities/frost_bolt/frost_bolt.gd"
 }, {
 "base": "Control",
 "class": "HUD",
