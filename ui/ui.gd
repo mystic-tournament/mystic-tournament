@@ -18,6 +18,9 @@ func _on_session_started():
 	_main_menu.queue_free()
 	_chat.move_upper()
 
+	if CmdArguments.server:
+		return
+
 	_hud = load("res://ui/hud/hud.tscn").instance()
 	add_child(_hud)
 
