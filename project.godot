@@ -297,4 +297,4 @@ ui_scoreboard={
 
 [rendering]
 
-environment/default_environment="res://default_env.tres"
+environment/default_environment="res://core/default_env.tres"

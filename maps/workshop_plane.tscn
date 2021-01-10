@@ -12,6 +12,12 @@ size = Vector3( 20, 0.2, 20 )
 
 [node name="Elements" type="Spatial"]
 
+[node name="SunLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.466278, -0.884638, 4.50664e-08, -0.722307, -0.380717, 0.577345, -0.510741, -0.269204, -0.8165, 4.65705, 22.0137, 0 )
+light_energy = 2.0
+shadow_enabled = true
+shadow_color = Color( 0.6, 0.6, 0.6, 1 )
+
 [node name="StaticBody" type="StaticBody" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
