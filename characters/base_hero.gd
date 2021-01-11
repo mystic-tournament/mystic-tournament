@@ -2,7 +2,7 @@ class_name BaseHero
 extends KinematicBody
 
 
-signal died(sender, by)
+signal died(by)
 signal ability_changed(idx, ability)
 signal health_changed(value)
 
@@ -94,7 +94,7 @@ func change_health(value: int, by: BaseHero = null) -> void:
 	_floating_text.show_text(value)
 	self.health = health + value
 	if health <= 0:
-		emit_signal("died", self, by)
+		emit_signal("died", by)
 
 
 func set_health(value: int) -> void:

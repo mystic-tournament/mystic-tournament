@@ -10,4 +10,3 @@ var character: BaseHero setget set_character
 func set_character(new_character: BaseHero) -> void:
 	character = new_character
 	character.set_network_master(get_network_master(), true)
-
