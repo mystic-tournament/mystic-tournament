@@ -134,7 +134,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/main_menu/custom_game/teams_tree/teams_tree.gd"
 }, {
-"base": "Reference",
+"base": "Node",
 "class": "TeamsTreeItem",
 "language": "GDScript",
 "path": "res://ui/main_menu/custom_game/teams_tree/teams_tree_item.gd"
@@ -188,7 +188,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Mystic Tournament"
+config/name="Gardum"
 run/main_scene="res://core/main.tscn"
 
 [autoload]
