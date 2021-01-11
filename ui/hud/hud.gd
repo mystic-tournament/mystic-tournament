@@ -14,13 +14,5 @@ func _ready() -> void:
 
 	var hero: BaseHero = GameSession.current_player().controller.character
 	# warning-ignore:return_value_discarded
-	hero.connect("health_changed", self, "set_health")
-	reset_health(hero.health, hero.max_health)
-
-
-func set_health(health: int) -> void:
-	_hp_bar.set_value_smoothly(health)
-
-
-func reset_health(current_health: int, max_health: int) -> void:
-	_hp_bar.reset(current_health, max_health)
+	hero.connect("health_changed", _hp_bar, "set_value_smoothly")
+	_hp_bar.reset(hero.health, hero.max_health)

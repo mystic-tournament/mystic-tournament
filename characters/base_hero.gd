@@ -3,6 +3,7 @@ extends KinematicBody
 
 
 signal died(by)
+signal health_modified(delta, by)
 signal ability_changed(idx, ability)
 signal health_changed(value)
 
@@ -88,11 +89,13 @@ func get_rotation_time() -> float:
 	return _rotation_tween.get_runtime()
 
 
-func change_health(value: int, by: BaseHero = null) -> void:
+func modify_health(delta: int, by: BaseHero) -> void:
 	if health <= 0:
 		return
-	_floating_text.show_text(value)
-	self.health = health + value
+	_floating_text.show_text(delta)
+	# TODO 4.0: Remove extra self
+	self.health = health + delta
+	emit_signal("health_modified", delta, by)
 	if health <= 0:
 		emit_signal("died", by)
 
@@ -104,5 +107,6 @@ func set_health(value: int) -> void:
 
 func respawn(position: Vector3) -> void:
 	translation = position
+	# TODO 4.0: Remove extra self
 	self.health = max_health
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

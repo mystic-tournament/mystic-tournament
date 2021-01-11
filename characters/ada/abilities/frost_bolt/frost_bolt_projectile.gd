@@ -11,6 +11,6 @@ func _physics_process(delta: float) -> void:
 	if not collision:
 		return
 
-	if collision.collider.has_method("change_health"):
-		collision.collider.change_health(-10, caster)
+	if collision.collider.has_method("modify_health"):
+		collision.collider.modify_health(-10, caster)
 	queue_free()
