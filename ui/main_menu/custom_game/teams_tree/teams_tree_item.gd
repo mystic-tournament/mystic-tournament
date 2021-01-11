@@ -1,4 +1,4 @@
-class_name TreeItemWrapper
+class_name TeamsTreeItem
 extends Node
 # Wrapper around TreeItem to represent data in TeamsTree
 # Automatically creates a child TreeItem for the given object and its Tree.

@@ -1,5 +1,5 @@
 class_name Slot
-extends TreeItemWrapper
+extends TeamsTreeItem
 # It's child of a Team that represents Slot in TeamsTree
 # Contains text based on the given ID
 # ID can be a peer ID or a special number that represents empty slot / computer

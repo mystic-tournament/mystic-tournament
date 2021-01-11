@@ -119,12 +119,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/main_menu/custom_game/server_settings.gd"
 }, {
-"base": "TreeItemWrapper",
+"base": "TeamsTreeItem",
 "class": "Slot",
 "language": "GDScript",
 "path": "res://ui/main_menu/custom_game/teams_tree/slot.gd"
 }, {
-"base": "TreeItemWrapper",
+"base": "TeamsTreeItem",
 "class": "Team",
 "language": "GDScript",
 "path": "res://ui/main_menu/custom_game/teams_tree/team.gd"
@@ -134,10 +134,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/main_menu/custom_game/teams_tree/teams_tree.gd"
 }, {
-"base": "Node",
-"class": "TreeItemWrapper",
+"base": "Reference",
+"class": "TeamsTreeItem",
 "language": "GDScript",
-"path": "res://ui/main_menu/custom_game/teams_tree/tree_item_wrapper.gd"
+"path": "res://ui/main_menu/custom_game/teams_tree/teams_tree_item.gd"
 }, {
 "base": "Control",
 "class": "UI",
@@ -180,7 +180,7 @@ _global_script_class_icons={
 "Slot": "",
 "Team": "",
 "TeamsTree": "",
-"TreeItemWrapper": "",
+"TeamsTreeItem": "",
 "UI": "",
 "Utils": "",
 "ValueBar": ""

@@ -1,5 +1,5 @@
 class_name Team
-extends TreeItemWrapper
+extends TeamsTreeItem
 # Represents team in TeamsTree
 # Displays the team number and its slots
 # Can be without number to just represent all players

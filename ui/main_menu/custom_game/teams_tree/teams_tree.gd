@@ -103,7 +103,7 @@ puppet func _create_team(slots, number: int = _teams.size() + 1) -> void:
 
 
 func _on_button_pressed(item: TreeItem, column: int, _button_idx: int) -> void:
-	var wrapper: TreeItemWrapper = item.get_meta(TreeItemWrapper.WRAPPER_META)
+	var wrapper: TeamsTreeItem = item.get_meta(TeamsTreeItem.WRAPPER_META)
 	if wrapper is Team:
 		match column:
 			Team.Buttons.JOIN:
