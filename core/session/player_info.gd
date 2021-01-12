@@ -2,13 +2,19 @@ class_name PlayerInfo
 extends Node
 
 
+signal kills_changed(kills)
+signal deaths_changed(deaths)
+signal assists_changed(assists)
+signal damage_changed(damage)
+signal healing_changed(healing)
+
 var controller: BaseController
 var team: int
-var kills: int
-var deaths: int
-var assists: int
-var damage: int
-var healing: int
+var kills: int setget set_kills
+var deaths: int setget set_deaths
+var assists: int setget set_assists
+var damage: int setget set_damage
+var healing: int setget set_healing
 
 
 func _init(player_team: int) -> void:
@@ -28,15 +34,40 @@ func _on_session_started() -> void:
 
 func _on_hero_died(by: BaseHero, who: BaseHero) -> void:
 	if by == controller.character:
-		kills += 1
+		self.kills += 1
 	elif who == controller.character:
-		deaths += 1
+		self.deaths += 1
 
 
 func _on_health_modified(delta: int, by: BaseHero) -> void:
 	if by != controller.character:
 		return
 	if delta < 0:
-		damage -= delta
+		self.damage -= delta
 	else:
-		healing += delta
+		self.healing += delta
+
+
+func set_kills(value: int):
+	kills = value
+	emit_signal("kills_changed", value)
+
+
+func set_deaths(value: int):
+	deaths = value
+	emit_signal("deaths_changed", value)
+
+
+func set_assists(value: int):
+	assists = value
+	emit_signal("assists_changed", value)
+
+
+func set_damage(value: int):
+	damage = value
+	emit_signal("damage_changed", value)
+
+
+func set_healing(value: int):
+	healing = value
+	emit_signal("healing_changed", value)

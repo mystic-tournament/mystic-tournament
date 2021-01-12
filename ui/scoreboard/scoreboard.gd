@@ -14,5 +14,5 @@ func _input(event: InputEvent) -> void:
 		hide()
 	elif not visible and event.is_pressed():
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		_tree.update_info()
+		_tree.create_items()
 		show()
