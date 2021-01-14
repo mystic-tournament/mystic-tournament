@@ -7,9 +7,12 @@ signal health_modified(delta, by)
 signal ability_changed(idx, ability)
 signal health_changed(value)
 
-enum {
+enum Abilities {
 	BASE_ATTACK,
-	ULTIMATE = 4,
+	ABILITY1,
+	ABILITY2,
+	ABILITY3,
+	ULTIMATE,
 }
 
 const MOVE_SPEED = 10
@@ -17,11 +20,11 @@ const JUMP_IMPULSE = 4
 
 sync var max_health: int = 20
 sync var health: int = max_health setget set_health
+var projectile_spawn_pos: Position3D
 
 var _motion: Vector3
 var _velocity: Vector3
-var _abilities: Dictionary
-var _abilities_spawn_positions: Dictionary
+var _abilities: Array
 
 onready var _floating_text: FloatingText = $FloatingText
 onready var _rotation_tween: Tween = $RotationTween
@@ -30,6 +33,7 @@ onready var _collision: CollisionShape = $Collision
 
 
 func _init() -> void:
+	_abilities.resize(Abilities.size())
 	rset_config("global_transform", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
@@ -64,21 +68,18 @@ puppetsync func rotate_smoothly_to(y_radians: float) -> void:
 
 
 # TODO 4.0: Use BaseAbility type for ability (cyclic dependency)
-func set_ability(idx: int, ability, spawn_position: Position3D) -> void:
+func set_ability(idx: int, ability) -> void:
 	_abilities[idx] = ability
-	_abilities_spawn_positions[idx] = spawn_position
 	emit_signal("ability_changed", idx, ability)
 
 
-func can_use(idx: int) -> bool:
-	if not _abilities.has(idx):
-		return false
-	return true # Check for cooldown
+# TODO 4.0: Use BaseAbility type for return type (cyclic dependency)
+func get_ability(idx: int):
+	return _abilities[idx]
 
 
 puppetsync func use_ability(idx: int) -> void:
-	if _abilities.has(idx):
-		_abilities[idx].use(self, _abilities_spawn_positions.get(idx).global_transform)
+	_abilities[idx].use(self)
 
 
 func get_level() -> int:
