@@ -74,6 +74,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://characters/ada/abilities/frost_bolt/frost_bolt.gd"
 }, {
+"base": "BaseAbility",
+"class": "FrostPath",
+"language": "GDScript",
+"path": "res://characters/ada/abilities/frost_path/frost_path.gd"
+}, {
+"base": "KinematicBody",
+"class": "FrostPathPlane",
+"language": "GDScript",
+"path": "res://characters/ada/abilities/frost_path/frost_path_plane.gd"
+}, {
 "base": "Control",
 "class": "HUD",
 "language": "GDScript",
@@ -168,6 +178,8 @@ _global_script_class_icons={
 "ExitDialog": "",
 "FloatingText": "",
 "FrostBolt": "",
+"FrostPath": "",
+"FrostPathPlane": "",
 "HUD": "",
 "MainMenu": "",
 "Parameters": "",

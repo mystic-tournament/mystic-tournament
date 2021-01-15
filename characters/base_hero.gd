@@ -20,15 +20,16 @@ const JUMP_IMPULSE = 4
 
 sync var max_health: int = 20
 sync var health: int = max_health setget set_health
+
 var projectile_spawn_pos: Position3D
+var mesh_instance: MeshInstance
+var velocity: Vector3
 
 var _motion: Vector3
-var _velocity: Vector3
 var _abilities: Array
 
 onready var _floating_text: FloatingText = $FloatingText
 onready var _rotation_tween: Tween = $RotationTween
-onready var _mesh: MeshInstance = $Mesh
 onready var _collision: CollisionShape = $Collision
 
 
@@ -41,24 +42,24 @@ func move(delta: float, direction: Vector3, jumping: bool) -> void:
 	_motion = _motion.linear_interpolate(direction * MOVE_SPEED, Parameters.get_motion_interpolate_speed() * delta)
 
 	var new_velocity: Vector3
-	if is_on_floor():
+	if is_on_floor() and velocity.length() < MOVE_SPEED:
 		new_velocity = _motion
 		if jumping:
 			new_velocity.y = JUMP_IMPULSE
 		else:
 			new_velocity.y = -Parameters.get_gravity()
 	else:
-		new_velocity = _velocity.linear_interpolate(_motion, Parameters.get_velocity_interpolate_speed() * delta)
-		new_velocity.y = _velocity.y - Parameters.get_gravity() * delta
+		new_velocity = velocity.linear_interpolate(_motion, Parameters.get_velocity_interpolate_speed() * delta)
+		new_velocity.y = velocity.y - Parameters.get_gravity() * delta
 
-	_velocity = move_and_slide(new_velocity, Vector3.UP, true)
+	velocity = move_and_slide(new_velocity, Vector3.UP, true)
 	# TODO: Replace with https://github.com/godotengine/godot/pull/37200
 	rset_unreliable("global_transform", global_transform)
 
 
 puppetsync func rotate_smoothly_to(y_radians: float) -> void:
 	# warning-ignore:return_value_discarded
-	_rotation_tween.interpolate_property(_mesh, "rotation:y", _mesh.rotation.y,
+	_rotation_tween.interpolate_property(mesh_instance, "rotation:y", mesh_instance.rotation.y,
 			y_radians, 0.1, Tween.TRANS_SINE, Tween.EASE_OUT)
 	# warning-ignore:return_value_discarded
 	_rotation_tween.interpolate_property(_collision, "rotation:y", _collision.rotation.y,
