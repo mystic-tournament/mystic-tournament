@@ -4,8 +4,8 @@ extends TextureRect
 onready var _key_label: Label = $KeyLabel
 
 
-func set_action_index(idx: int) -> void:
-	var event = InputMap.get_action_list(PlayerController.ABILITY_ACTIONS[idx]).front()
+func set_action(action: String) -> void:
+	var event = InputMap.get_action_list(action).front()
 	if event is InputEventMouseButton:
 		match event.button_index:
 			BUTTON_LEFT:

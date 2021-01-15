@@ -10,7 +10,7 @@ onready var _hp_bar: ValueBar = $VBox/HBox/HPBar
 
 func _ready() -> void:
 	for i in _abilities.get_child_count():
-		_abilities.get_child(i).set_action_index(i)
+		_abilities.get_child(i).set_action(PlayerController.ABILITY_ACTIONS[i])
 
 	var hero: BaseHero = GameSession.current_player().controller.character
 	# warning-ignore:return_value_discarded
