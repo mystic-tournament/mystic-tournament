@@ -9,10 +9,17 @@ onready var _hp_bar: ValueBar = $VBox/HBox/HPBar
 
 
 func _ready() -> void:
-	for i in _abilities.get_child_count():
-		_abilities.get_child(i).set_action(PlayerController.ABILITY_ACTIONS[i])
-
 	var hero: BaseHero = GameSession.current_player().controller.character
+	for i in _abilities.get_child_count():
+		var ability_hud: AbilityHUD = _abilities.get_child(i)
+		ability_hud.set_action(PlayerController.ABILITY_ACTIONS[i])
+
+		var ability_cooldown: GameTimer = hero.get_ability_cooldown(i)
+		if ability_cooldown:
+			# warning-ignore:return_value_discarded
+			ability_cooldown.connect("started", ability_hud, "display_cooldown")
+
+
 	# warning-ignore:return_value_discarded
 	hero.connect("health_changed", _hp_bar, "set_value_smoothly")
 	_hp_bar.reset(hero.health, hero.max_health)

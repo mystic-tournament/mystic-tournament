@@ -14,7 +14,7 @@ func reset(new_value: float, new_max_value) -> void:
 
 func set_value_smoothly(new_value: float) -> void:
 	# warning-ignore:return_value_discarded
-	_tween.interpolate_property(self, "value", value, new_value, 0.2, Tween.TRANS_CUBIC, Tween.EASE_OUT);
+	_tween.interpolate_property(self, "value", value, new_value, 0.2, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 
 	set_value(new_value)
 

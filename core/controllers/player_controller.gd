@@ -44,8 +44,7 @@ func _unhandled_input(event: InputEvent):
 		if not event.is_action_released(ABILITY_ACTIONS[i]):
 			continue
 
-		var ability: BaseAbility = character.get_ability(i)
-		if ability == null:
+		if not character.can_use_ability(i):
 			return
 
 		character.rpc("rotate_smoothly_to", _camera.rotation.y)
