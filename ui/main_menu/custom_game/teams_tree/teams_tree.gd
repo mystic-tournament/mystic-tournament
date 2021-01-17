@@ -15,7 +15,7 @@ func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	connect("button_pressed", self, "_on_button_pressed")
 	# warning-ignore:return_value_discarded
-	GameSession.connect("about_to_start", self, "_set_session_data")
+	GameSession.connect("about_to_start", self, "_confirm_settings")
 
 
 func create(teams_count: int, slots_count: int) -> void:
@@ -150,7 +150,7 @@ func _is_teams_full() -> bool:
 	return true
 
 
-func _set_session_data() -> void:
+func _confirm_settings() -> void:
 	for team in _teams:
 		for slot_idx in team.size():
 			var id: int = team.get_slot(slot_idx).id

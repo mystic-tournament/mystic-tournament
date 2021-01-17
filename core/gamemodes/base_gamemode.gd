@@ -1,10 +1,17 @@
 class_name BaseGamemode
-extends Node
 
 
 func _init() -> void:
 	# warning-ignore:return_value_discarded
 	GameSession.connect("started", self, "_on_session_started")
+
+
+static func name() -> String:
+	return String()
+
+
+static func additional_settings() -> Array:
+	return []
 
 
 func _on_session_started() -> void:
@@ -14,7 +21,6 @@ func _on_session_started() -> void:
 		hero.connect("died", self, "_on_hero_died", [hero])
 
 
-# TODO 4.0: Unbind by
 func _on_hero_died(_by: BaseHero, who: BaseHero) -> void:
 	who.visible = false
 	yield(GameSession.get_tree().create_timer(who.get_level()), "timeout") # TODO: Use formula

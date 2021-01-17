@@ -5,14 +5,13 @@ signal started
 signal about_to_start
 
 var players: Dictionary # Contains player ids as keys and PlayerInfo as values
-var map: Node = preload("res://maps/workshop_plane.tscn").instance()
+var map: BaseMap
 var gamemode: BaseGamemode
 
 
 puppetsync func start_game() -> void:
 	emit_signal("about_to_start")
 	var hero_scene: PackedScene = load("res://characters/ada/ada.tscn")
-	gamemode = BaseGamemode.new()
 	for id in players:
 		var hero: Ada = hero_scene.instance()
 		hero.set_name("Player" + str(id))
