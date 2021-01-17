@@ -11,7 +11,7 @@ var gamemode: BaseGamemode
 
 puppetsync func start_game() -> void:
 	emit_signal("about_to_start")
-	var hero_scene: PackedScene = load("res://characters/ada/ada.tscn")
+	var hero_scene: PackedScene = preload("res://characters/ada/ada.tscn")
 	for id in players:
 		var hero: Ada = hero_scene.instance()
 		hero.set_name("Player" + str(id))

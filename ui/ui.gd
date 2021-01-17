@@ -21,8 +21,8 @@ func _on_session_started():
 	if CmdArguments.server:
 		return
 
-	_hud = load("res://ui/hud/hud.tscn").instance()
+	_hud = preload("res://ui/hud/hud.tscn").instance()
 	add_child(_hud)
 
-	_scoreboard = load("res://ui/scoreboard/scoreboard.tscn").instance()
+	_scoreboard = preload("res://ui/scoreboard/scoreboard.tscn").instance()
 	add_child(_scoreboard)

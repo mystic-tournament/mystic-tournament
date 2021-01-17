@@ -20,7 +20,7 @@ var _z_strength: float
 
 func _ready() -> void:
 	if is_network_master():
-		_camera = load("res://core/controllers/player_camera.tscn").instance()
+		_camera = preload("res://core/controllers/player_camera.tscn").instance()
 	else:
 		set_physics_process(false)
 		set_process_unhandled_input(false)
