@@ -1,6 +1,6 @@
-class_name Slot
-extends TeamsTreeItem
-# It's child of a Team that represents Slot in TeamsTree
+class_name LobbySlot
+extends LobbyTreeItem
+# It's child of a team that represents slot in LobbyTree
 # Contains text based on the given ID
 # ID can be a peer ID or a special number that represents empty slot / computer
 
@@ -20,7 +20,7 @@ enum Buttons {
 puppetsync var id: int = -1 setget set_id
 
 
-# TODO 4.0: Use Team type for team (cyclic dependency)
+# TODO 4.0: Use LobbyTeam type for team (cyclic dependency)
 func _init(team: Node, slot_id: int).(team.get_parent(), team.get_tree_item()) -> void:
 	team.add_child(self, true)
 	self.id = slot_id

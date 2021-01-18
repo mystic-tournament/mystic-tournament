@@ -1,6 +1,6 @@
-class_name Team
-extends TeamsTreeItem
-# Represents team in TeamsTree
+class_name LobbyTeam
+extends LobbyTreeItem
+# Represents team in LobbyTree
 # Displays the team number and its slots
 # Can be without number to just represent all players
 
@@ -46,7 +46,7 @@ puppetsync func add_slots(slots) -> void:
 			_create_slot(id)
 	else:
 		for _i in range(slots):
-			_create_slot(Slot.EMPTY_SLOT)
+			_create_slot(LobbySlot.EMPTY_SLOT)
 	_update_text()
 
 
@@ -54,7 +54,7 @@ puppetsync func truncate(size: int) -> void:
 	Utils.truncate_and_free(_slots, size)
 
 
-func find_slot(id: int) -> Slot:
+func find_slot(id: int) -> LobbySlot:
 	for slot in _slots:
 		if slot.id == id:
 			return slot
@@ -65,7 +65,7 @@ func size() -> int:
 	return _slots.size()
 
 
-func get_slot(idx: int) -> Slot:
+func get_slot(idx: int) -> LobbySlot:
 	return _slots[idx]
 
 
@@ -80,12 +80,12 @@ func is_full() -> bool:
 	return _slots.size() == _used_slots_count
 
 
-func _on_slot_id_changed(slot: Slot, previous_slot_id: int) -> void:
-	if previous_slot_id == Slot.EMPTY_SLOT and slot.id != Slot.EMPTY_SLOT:
+func _on_slot_id_changed(slot: LobbySlot, previous_slot_id: int) -> void:
+	if previous_slot_id == LobbySlot.EMPTY_SLOT and slot.id != LobbySlot.EMPTY_SLOT:
 		_used_slots_count += 1
 		if is_full():
 			emit_signal("filled_changed")
-	elif previous_slot_id != Slot.EMPTY_SLOT and slot.id == Slot.EMPTY_SLOT:
+	elif previous_slot_id != LobbySlot.EMPTY_SLOT and slot.id == LobbySlot.EMPTY_SLOT:
 		_move_slot_down(slot)
 		_used_slots_count -= 1
 		if _slots.size() == _used_slots_count + 1:
@@ -100,17 +100,17 @@ func _on_slot_id_changed(slot: Slot, previous_slot_id: int) -> void:
 
 
 func _create_slot(id: int) -> void:
-	var slot := Slot.new(self, id)
+	var slot := LobbySlot.new(self, id)
 	# warning-ignore:return_value_discarded
 	slot.connect("id_changed", self, "_on_slot_id_changed")
 	# warning-ignore:return_value_discarded
-	slot.connect("destroyed", self, "_on_slot_id_changed", [Slot.EMPTY_SLOT])
+	slot.connect("destroyed", self, "_on_slot_id_changed", [LobbySlot.EMPTY_SLOT])
 	_slots.append(slot)
-	if id != Slot.EMPTY_SLOT:
-		_on_slot_id_changed(slot, Slot.EMPTY_SLOT)
+	if id != LobbySlot.EMPTY_SLOT:
+		_on_slot_id_changed(slot, LobbySlot.EMPTY_SLOT)
 
 
-func _move_slot_down(slot: Slot) -> void:
+func _move_slot_down(slot: LobbySlot) -> void:
 	_slots.remove(_slots.find(slot))
 	_slots.append(slot)
 	slot.get_tree_item().move_to_bottom()

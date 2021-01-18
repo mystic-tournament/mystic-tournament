@@ -1,4 +1,4 @@
-class_name TeamsTree
+class_name LobbyTree
 extends Tree
 
 
@@ -26,9 +26,9 @@ func create(teams_count: int, slots_count: int) -> void:
 	for i in range(teams_count):
 		if i == 0 and not CmdArguments.server:
 			# The first team should contain the host if it is not a headless server
-			var slots: Array = [Slot.HOST] # TODO 4.0: Use array because of bug with resize in PoolIntArray (https://github.com/godotengine/godot/issues/31040)
+			var slots: Array = [LobbySlot.HOST] # TODO 4.0: Use array because of bug with resize in PoolIntArray (https://github.com/godotengine/godot/issues/31040)
 			slots.resize(slots_count) # Will filled with zeroes that corresponds to EMPTY_SLOT
-			_create_team(PoolIntArray(slots), Team.NO_TEAM_NUMBER if teams_count == 1 else 1)
+			_create_team(PoolIntArray(slots), LobbyTeam.NO_TEAM_NUMBER if teams_count == 1 else 1)
 		else:
 			_create_team(slots_count)
 
@@ -49,7 +49,7 @@ func set_slots_count(count: int) -> void:
 
 func set_teams_count(count: int) -> void:
 	if count == 0:
-		_teams.front().rset("team_number", Team.NO_TEAM_NUMBER)
+		_teams.front().rset("team_number", LobbyTeam.NO_TEAM_NUMBER)
 		rpc("_truncate_teams", 1) # Remove all teams except one
 		return
 
@@ -70,7 +70,7 @@ func add_connected_player(connected_id: int) -> void:
 		return
 
 	# Add player to the first empty slot
-	var slot: Slot = _find_slot(Slot.EMPTY_SLOT)
+	var slot: LobbySlot = _find_slot(LobbySlot.EMPTY_SLOT)
 	assert(slot != null, "There is no empty slots to add a new player")
 	slot.id = connected_id
 
@@ -89,13 +89,13 @@ func remove_disconnected_player(id: int) -> void:
 		return
 
 	# Add player to the first empty slot
-	var slot: Slot = _find_slot(id)
+	var slot: LobbySlot = _find_slot(id)
 	assert(slot != null, "Disconnected player alredy does not exits")
-	slot.rset("id", Slot.EMPTY_SLOT)
+	slot.rset("id", LobbySlot.EMPTY_SLOT)
 
 
 puppet func _create_team(slots, number: int = _teams.size() + 1) -> void:
-	var team := Team.new(self, number, slots)
+	var team := LobbyTeam.new(self, number, slots)
 	if get_tree().is_network_server():
 		# warning-ignore:return_value_discarded
 		team.connect("filled_changed", self, "_check_if_filled_changed")
@@ -103,24 +103,24 @@ puppet func _create_team(slots, number: int = _teams.size() + 1) -> void:
 
 
 func _on_button_pressed(item: TreeItem, column: int, _button_idx: int) -> void:
-	var wrapper: TeamsTreeItem = item.get_meta(TeamsTreeItem.WRAPPER_META)
-	if wrapper is Team:
+	var wrapper: LobbyTreeItem = item.get_meta(LobbyTreeItem.WRAPPER_META)
+	if wrapper is LobbyTeam:
 		match column:
-			Team.Buttons.JOIN:
+			LobbyTeam.Buttons.JOIN:
 				rpc("_join_team", _teams.find(wrapper))
 	else:
 		match column:
-			Slot.Buttons.KICK_PLAYER:
+			LobbySlot.Buttons.KICK_PLAYER:
 				emit_signal("player_kicked", wrapper.id)
 
 
 master func _join_team(team_idx: int) -> void:
-	var previous_slot: Slot = _find_slot(get_tree().get_rpc_sender_id())
-	var new_slot = _teams[team_idx].find_slot(Slot.EMPTY_SLOT)
+	var previous_slot: LobbySlot = _find_slot(get_tree().get_rpc_sender_id())
+	var new_slot = _teams[team_idx].find_slot(LobbySlot.EMPTY_SLOT)
 	if new_slot == null:
 		return
 	new_slot.rset("id", previous_slot.id)
-	previous_slot.rset("id", Slot.EMPTY_SLOT)
+	previous_slot.rset("id", LobbySlot.EMPTY_SLOT)
 
 
 puppetsync func _truncate_teams(size: int) -> void:
@@ -135,9 +135,9 @@ func _check_if_filled_changed() -> void:
 	emit_signal("filled_changed", _teams_full)
 
 
-func _find_slot(id: int) -> Slot:
+func _find_slot(id: int) -> LobbySlot:
 	for team in _teams:
-		var slot: Slot = team.find_slot(id)
+		var slot: LobbySlot = team.find_slot(id)
 		if slot != null:
 			return slot
 	return null
@@ -154,6 +154,6 @@ func _confirm_settings() -> void:
 	for team in _teams:
 		for slot_idx in team.size():
 			var id: int = team.get_slot(slot_idx).id
-			if id == Slot.EMPTY_SLOT:
+			if id == LobbySlot.EMPTY_SLOT:
 				break # All next slots will also be empty, skip to next team
 			GameSession.players[id] = PlayerInfo.new(team.team_number)

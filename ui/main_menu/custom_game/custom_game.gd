@@ -5,7 +5,7 @@ var _peer := NetworkedMultiplayerENet.new()
 
 onready var _servers: PanelContainer = $Servers
 onready var _lobby: PanelContainer = $Lobby
-onready var _teams_tree: TeamsTree = $Lobby/VBox/TeamsTree
+onready var _lobby_tree: LobbyTree = $Lobby/VBox/LobbyTree
 onready var _leave_dialog: ConfirmationDialog = $Lobby/LeaveDialog
 onready var _server_name_edit: LineEdit = $Lobby/VBox/Grid/ServerNameEdit
 onready var _addresses_edit: LineEdit = $Lobby/VBox/Grid/AddressesEdit
@@ -29,13 +29,13 @@ func _init() -> void:
 
 func _ready() -> void:
 	# warning-ignore:return_value_discarded
-	_peer.connect("peer_connected", _teams_tree, "add_connected_player")
+	_peer.connect("peer_connected", _lobby_tree, "add_connected_player")
 	# warning-ignore:return_value_discarded
-	_peer.connect("peer_disconnected", _teams_tree, "remove_disconnected_player")
+	_peer.connect("peer_disconnected", _lobby_tree, "remove_disconnected_player")
 	# warning-ignore:return_value_discarded
-	_teams_tree.connect("player_kicked", _peer, "disconnect_peer")
+	_lobby_tree.connect("player_kicked", _peer, "disconnect_peer")
 	# warning-ignore:return_value_discarded
-	_teams_tree.connect("filled_changed", self, "_on_team_filled_changed", [], CONNECT_DEFERRED)
+	_lobby_tree.connect("filled_changed", self, "_on_team_filled_changed", [], CONNECT_DEFERRED)
 
 	if CmdArguments.server:
 		_confirm_creation()
@@ -116,11 +116,11 @@ func _confirm_creation() -> void:
 	_create_button.visible = false
 	_start_game_button.visible = true
 
-	_teams_tree.create(_server_settings.get_teams_count(), _server_settings.get_slots_count())
+	_lobby_tree.create(_server_settings.get_teams_count(), _server_settings.get_slots_count())
 	# warning-ignore:return_value_discarded
-	_server_settings.connect("teams_count_changed", _teams_tree, "set_teams_count")
+	_server_settings.connect("teams_count_changed", _lobby_tree, "set_teams_count")
 	# warning-ignore:return_value_discarded
-	_server_settings.connect("slots_count_changed", _teams_tree, "set_slots_count")
+	_server_settings.connect("slots_count_changed", _lobby_tree, "set_slots_count")
 
 	if CmdArguments.server:
 		print("Waiting for players...")
@@ -128,11 +128,11 @@ func _confirm_creation() -> void:
 
 func _confirm_leave() -> void:
 	if get_tree().is_network_server():
-		_server_settings.disconnect("teams_count_changed", _teams_tree, "set_teams_count")
-		_server_settings.disconnect("slots_count_changed", _teams_tree, "set_slots_count")
+		_server_settings.disconnect("teams_count_changed", _lobby_tree, "set_teams_count")
+		_server_settings.disconnect("slots_count_changed", _lobby_tree, "set_slots_count")
 		_server_settings.set_editable(false)
 
-	_teams_tree.clear()
+	_lobby_tree.clear()
 	_cancel_connection()
 	_switch_to_servers()
 

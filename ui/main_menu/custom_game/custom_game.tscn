@@ -2,15 +2,10 @@
 
 [ext_resource path="res://ui/main_menu/custom_game/custom_game.gd" type="Script" id=1]
 [ext_resource path="res://ui/main_menu/custom_game/server_settings/server_settings.tscn" type="PackedScene" id=2]
-[ext_resource path="res://ui/main_menu/custom_game/teams_tree/teams_tree.gd" type="Script" id=3]
+[ext_resource path="res://ui/main_menu/custom_game/lobby_tree/lobby_tree.gd" type="Script" id=3]
 [ext_resource path="res://ui/main_menu/custom_game/dialogs/connection_dialog.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/main_menu/custom_game/dialogs/error_dialog.gd" type="Script" id=5]
 [ext_resource path="res://ui/main_menu/custom_game/dialogs/direct_coonect_dialog.tscn" type="PackedScene" id=7]
-
-
-
-
-
 
 [node name="CustomGame" type="HBoxContainer"]
 anchor_left = 0.15
@@ -169,7 +164,7 @@ size_flags_horizontal = 0
 max_value = 65535.0
 value = 6666.0
 
-[node name="TeamsTree" type="Tree" parent="Lobby/VBox"]
+[node name="LobbyTree" type="Tree" parent="Lobby/VBox"]
 margin_top = 84.0
 margin_right = 586.0
 margin_bottom = 162.0

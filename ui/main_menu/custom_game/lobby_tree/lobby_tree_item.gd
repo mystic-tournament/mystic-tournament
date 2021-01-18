@@ -1,6 +1,6 @@
-class_name TeamsTreeItem
+class_name LobbyTreeItem
 extends Node
-# Wrapper around TreeItem to represent data in TeamsTree
+# Wrapper around TreeItem to represent data in LobbyTree
 # Automatically creates a child TreeItem for the given object and its Tree.
 # It extends Node to allow RPC synchronization
 

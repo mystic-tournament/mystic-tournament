@@ -29,7 +29,7 @@ func create_items() -> void:
 		var player_info: PlayerInfo = GameSession.players[id]
 		if not teams.has(player_info.team):
 			var team_item: TreeItem = create_item(root)
-			if player_info.team == Team.NO_TEAM_NUMBER:
+			if player_info.team == LobbyTeam.NO_TEAM_NUMBER:
 				team_item.set_text(0, "Players")
 			else:
 				team_item.set_text(0, "Team %d" % player_info.team)
