@@ -144,7 +144,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/controllers/player_controller.gd"
 }, {
-"base": "Node",
+"base": "BaseInfo",
 "class": "PlayerInfo",
 "language": "GDScript",
 "path": "res://core/session/player_info.gd"

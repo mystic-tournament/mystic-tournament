@@ -1,5 +1,4 @@
 class_name PlayerInfo
-extends Node
 
 
 signal kills_changed(kills)
