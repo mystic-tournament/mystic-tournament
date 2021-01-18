@@ -41,7 +41,7 @@ master func _send_message(message: String) -> void:
 	rpc("_display_message", "white", "[[color=green]%d[/color]]: %s" % [get_tree().get_rpc_sender_id(), message])
 
 
-puppetsync func _display_message(bbColor: String, message: String):
+puppetsync func _display_message(bbColor: String, message: String) -> void:
 	if CmdArguments.server:
 		print(_time(), " ", message)
 	else:

@@ -26,7 +26,7 @@ func _ready() -> void:
 		set_process_unhandled_input(false)
 
 
-func _unhandled_input(event: InputEvent):
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action("move_left"):
 		_x_strength = Input.get_action_strength("move_right") - event.get_action_strength("move_left")
 		return

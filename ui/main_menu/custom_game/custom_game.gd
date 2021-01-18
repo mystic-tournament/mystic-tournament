@@ -105,7 +105,7 @@ func _on_server_disconnected() -> void:
 	_error_dialog.show_error("Server was disconnected")
 
 
-func _confirm_creation():
+func _confirm_creation() -> void:
 	if _peer.create_server(int(_port_spin.value)) != OK:
 		_error_dialog.show_error("Unable to create server")
 		return

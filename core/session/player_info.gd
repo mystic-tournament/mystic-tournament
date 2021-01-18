@@ -48,26 +48,26 @@ func _on_health_modified(delta: int, by: BaseHero) -> void:
 		self.healing += delta
 
 
-func set_kills(value: int):
+func set_kills(value: int) -> void:
 	kills = value
 	emit_signal("kills_changed", value)
 
 
-func set_deaths(value: int):
+func set_deaths(value: int) -> void:
 	deaths = value
 	emit_signal("deaths_changed", value)
 
 
-func set_assists(value: int):
+func set_assists(value: int) -> void:
 	assists = value
 	emit_signal("assists_changed", value)
 
 
-func set_damage(value: int):
+func set_damage(value: int) -> void:
 	damage = value
 	emit_signal("damage_changed", value)
 
 
-func set_healing(value: int):
+func set_healing(value: int) -> void:
 	healing = value
 	emit_signal("healing_changed", value)

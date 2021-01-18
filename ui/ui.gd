@@ -14,7 +14,7 @@ func _ready() -> void:
 	GameSession.connect("started", self, "_on_session_started")
 
 
-func _on_session_started():
+func _on_session_started() -> void:
 	_main_menu.queue_free()
 	_chat.move_upper()
 

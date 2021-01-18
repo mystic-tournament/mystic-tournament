@@ -17,7 +17,7 @@ onready var _additional_settings_idx: int = _vbox.get_child_count()
 var _map: PackedScene
 
 
-func _ready():
+func _ready() -> void:
 	set_editable(false)
 	_on_teams_toggled(_teams_enabled.pressed)
 
@@ -36,7 +36,7 @@ func _ready():
 	_on_map_changed(_map_edit.text)
 
 
-func set_editable(editable: bool):
+func set_editable(editable: bool) -> void:
 	_teams_enabled.disabled = !editable
 	_slots_count.editable = editable
 	_teams_count.editable = editable
