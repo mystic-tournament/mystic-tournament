@@ -104,7 +104,7 @@ func _create_slot(id: int) -> void:
 	# warning-ignore:return_value_discarded
 	slot.connect("id_changed", self, "_on_slot_id_changed")
 	# warning-ignore:return_value_discarded
-	slot.connect("destroyed", self, "_on_slot_id_changed", [LobbySlot.EMPTY_SLOT])
+	slot.connect("destroyed", self, "_on_slot_id_changed", [slot, LobbySlot.EMPTY_SLOT])
 	_slots.append(slot)
 	if id != LobbySlot.EMPTY_SLOT:
 		_on_slot_id_changed(slot, LobbySlot.EMPTY_SLOT)

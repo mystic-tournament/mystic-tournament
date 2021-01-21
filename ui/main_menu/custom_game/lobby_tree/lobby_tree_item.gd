@@ -5,7 +5,7 @@ extends Node
 # It extends Node to allow RPC synchronization
 
 
-signal destroyed(object)
+signal destroyed()
 
 const WRAPPER_META: String = "wrapper"
 
@@ -19,7 +19,7 @@ func _init(tree: Tree, root: TreeItem) -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		_tree_item.free()
-		emit_signal("destroyed", self)
+		emit_signal("destroyed")
 
 
 func get_tree_item() -> TreeItem:
