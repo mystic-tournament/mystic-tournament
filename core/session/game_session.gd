@@ -4,27 +4,77 @@ extends Node
 signal started
 signal about_to_start
 
-var players: Dictionary # Contains player ids as keys and PlayerInfo as values
 var map: BaseMap
 var gamemode: BaseGamemode
+
+var _teams: Array
+var _players: Array
+var _current_player: Player
 
 
 puppetsync func start_game() -> void:
 	emit_signal("about_to_start")
 	var hero_scene: PackedScene = preload("res://characters/ada/ada.tscn")
-	for id in players:
+	for player in _players:
 		var hero: Ada = hero_scene.instance()
-		hero.set_name("Player" + str(id))
+		hero.set_name("Player" + str(player.get_network_master()))
 		map.add_child(hero)
-
-		var controller := PlayerController.new()
-		players[id].controller = controller
-		controller.set_network_master(id)
-		add_child(controller)
-		controller.character = hero
+		player.get_controller().character = hero
+		# warning-ignore:return_value_discarded
+		hero.connect("died", self, "_on_hero_died", [hero])
+		# warning-ignore:return_value_discarded
+		hero.connect("health_modified", self, "_on_health_modified")
 	emit_signal("started")
 
 
-func current_player() -> PlayerInfo:
-	var network_id: int = get_tree().get_network_unique_id()
-	return players[network_id]
+func get_players_count() -> int:
+	return _players.size()
+
+
+func add_player(player: Player) -> void:
+	assert(not player in _players, "GameSession already contains this player")
+	_players.append(player)
+	add_child(player.get_controller())
+	if player.get_network_master() == get_tree().get_network_unique_id():
+		_current_player = player
+
+
+func get_player(idx: int) -> Player:
+	return _players[idx]
+
+
+func get_current_player() -> Player:
+	return _current_player
+
+
+func get_teams_count() -> int:
+	return _teams.size()
+
+
+func add_team(team: Team) -> void:
+	assert(not team in _teams, "GameSession already contains this team")
+	_teams.append(team)
+
+
+func get_team(idx: int) -> Team:
+	return _teams[idx]
+
+
+func _on_hero_died(by: BaseHero, who: BaseHero) -> void:
+	var player_by: Player = by.get_controller().get_player()
+	player_by.get_statistic().kills += 1
+	player_by.get_team().get_statistic().kills += 1
+
+	var player_who: Player = who.get_controller().get_player()
+	player_who.get_statistic().kills += 1
+	player_who.get_team().get_statistic().kills += 1
+
+
+func _on_health_modified(delta: int, by: BaseHero) -> void:
+	var player_by: Player = by.get_controller().get_player()
+	if delta < 0:
+		player_by.get_statistic().damage -= delta
+		player_by.get_team().get_statistic().damage -= delta
+	else:
+		player_by.get_statistic().healing += delta
+		player_by.get_team().get_statistic().healing += delta

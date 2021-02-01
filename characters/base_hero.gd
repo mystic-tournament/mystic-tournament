@@ -28,6 +28,8 @@ var velocity: Vector3
 var _motion: Vector3
 var _abilities: Array
 var _ability_cooldowns: Array
+# TODO 4.0: Use BaseController type (cyclic dependency)
+var _controller
 
 onready var _floating_text: FloatingText = $FloatingText
 onready var _rotation_tween: Tween = $RotationTween
@@ -138,3 +140,8 @@ func respawn(position: Vector3) -> void:
 	# TODO 4.0: Remove extra self
 	self.health = max_health
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+# TODO 4.0: Use BaseController return type (cyclic dependency)
+func get_controller():
+	return _controller

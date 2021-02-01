@@ -18,6 +18,11 @@ var _x_strength: float
 var _z_strength: float
 
 
+# TODO 4.0: Use Player type for player (cyclic dependency)
+func _init(player).(player) -> void:
+	pass
+
+
 func _ready() -> void:
 	if is_network_master():
 		_camera = preload("res://core/controllers/player_camera.tscn").instance()

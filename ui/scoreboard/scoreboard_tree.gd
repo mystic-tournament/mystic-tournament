@@ -24,38 +24,49 @@ func create_items() -> void:
 	root.set_text(Columns.HEALING, "Healing")
 	_disable_selection(root)
 
-	var teams: Dictionary = {} # Contains team numbers as keys and TreeItem as values
-	for id in GameSession.players:
-		var player_info: PlayerInfo = GameSession.players[id]
-		if not teams.has(player_info.team):
-			var team_item: TreeItem = create_item(root)
-			if player_info.team == LobbyTeam.NO_TEAM_NUMBER:
-				team_item.set_text(0, "Players")
-			else:
-				team_item.set_text(0, "Team %d" % player_info.team)
-			_disable_selection(team_item)
-			teams[player_info.team] = team_item
+	if GameSession.get_teams_count() > 0:
+		for i in GameSession.get_teams_count():
+			var team: Team = GameSession.get_team(i)
+			var team_item: TreeItem = _create_team(i)
+			for j in team.get_players_count():
+				_create_player_item(team_item, team.get_player(j))
+	else:
+		var team_item: TreeItem = _create_team(LobbyTeam.NO_TEAM_NUMBER)
+		for i in GameSession.get_players_count():
+			_create_player_item(team_item, GameSession.get_player(i))
 
-		var player_item: TreeItem = create_item(teams[player_info.team])
-		_disable_selection(player_item)
 
-		player_item.set_text(Columns.ID, str(id))
-		player_item.set_text(Columns.KILLS, "0")
-		player_item.set_text(Columns.DEATHS, "0")
-		player_item.set_text(Columns.ASSISTS, "0")
-		player_item.set_text(Columns.DAMAGE, "0")
-		player_item.set_text(Columns.HEALING, "0")
+func _create_team(team_number: int) -> TreeItem:
+	var team_item: TreeItem = create_item(get_root())
+	if team_number == LobbyTeam.NO_TEAM_NUMBER:
+		team_item.set_text(0, "Players")
+	else:
+		team_item.set_text(0, "Team %d" % team_number)
+	_disable_selection(team_item)
+	return team_item
 
-		# warning-ignore:return_value_discarded
-		player_info.connect("kills_changed", self, "_on_info_changed", [player_item, Columns.KILLS])
-		# warning-ignore:return_value_discarded
-		player_info.connect("deaths_changed", self, "_on_info_changed", [player_item, Columns.DEATHS])
-		# warning-ignore:return_value_discarded
-		player_info.connect("assists_changed", self, "_on_info_changed", [player_item, Columns.ASSISTS])
-		# warning-ignore:return_value_discarded
-		player_info.connect("damage_changed", self, "_on_info_changed", [player_item, Columns.DAMAGE])
-		# warning-ignore:return_value_discarded
-		player_info.connect("healing_changed", self, "_on_info_changed", [player_item, Columns.HEALING])
+
+func _create_player_item(team_item: TreeItem, player: Player) -> void:
+	var player_item: TreeItem = create_item(team_item)
+	_disable_selection(player_item)
+
+	player_item.set_text(Columns.ID, str(player.get_network_master()))
+	player_item.set_text(Columns.KILLS, "0")
+	player_item.set_text(Columns.DEATHS, "0")
+	player_item.set_text(Columns.ASSISTS, "0")
+	player_item.set_text(Columns.DAMAGE, "0")
+	player_item.set_text(Columns.HEALING, "0")
+
+	# warning-ignore:return_value_discarded
+	player.get_statistic().connect("kills_changed", self, "_on_info_changed", [player_item, Columns.KILLS])
+	# warning-ignore:return_value_discarded
+	player.get_statistic().connect("deaths_changed", self, "_on_info_changed", [player_item, Columns.DEATHS])
+	# warning-ignore:return_value_discarded
+	player.get_statistic().connect("assists_changed", self, "_on_info_changed", [player_item, Columns.ASSISTS])
+	# warning-ignore:return_value_discarded
+	player.get_statistic().connect("damage_changed", self, "_on_info_changed", [player_item, Columns.DAMAGE])
+	# warning-ignore:return_value_discarded
+	player.get_statistic().connect("healing_changed", self, "_on_info_changed", [player_item, Columns.HEALING])
 
 
 func _disable_selection(item: TreeItem) -> void:

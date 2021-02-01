@@ -15,8 +15,8 @@ static func additional_settings() -> Array:
 
 
 func _on_session_started() -> void:
-	for id in GameSession.players:
-		var hero: BaseHero = GameSession.players[id].controller.character
+	for i in GameSession.get_players_count():
+		var hero: BaseHero = GameSession.get_player(i).get_controller().character
 		# warning-ignore:return_value_discarded
 		hero.connect("died", self, "_on_hero_died", [hero])
 

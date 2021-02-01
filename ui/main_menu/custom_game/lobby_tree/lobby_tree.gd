@@ -152,8 +152,13 @@ func _is_teams_full() -> bool:
 
 func _confirm_settings() -> void:
 	for team in _teams:
+		if team.team_number != LobbyTeam.NO_TEAM_NUMBER:
+			GameSession.add_team(Team.new())
 		for slot_idx in team.size():
 			var id: int = team.get_slot(slot_idx).id
 			if id == LobbySlot.EMPTY_SLOT:
 				break # All next slots will also be empty, skip to next team
-			GameSession.players[id] = PlayerInfo.new(team.team_number)
+			var session_player := Player.new(id)
+			GameSession.add_player(session_player)
+			if team.team_number != LobbyTeam.NO_TEAM_NUMBER:
+				GameSession.get_team(team.team_number - 1).add_player(session_player)
