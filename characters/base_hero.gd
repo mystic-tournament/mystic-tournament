@@ -21,10 +21,10 @@ const JUMP_IMPULSE = 4
 sync var max_health: int = 20
 sync var health: int = max_health setget set_health
 
-var projectile_spawn_pos: Position3D
-var mesh_instance: MeshInstance
 var velocity: Vector3
 
+var _projectile_spawn_pos: Position3D
+var _mesh_instance: MeshInstance
 var _motion: Vector3
 var _abilities: Array
 var _ability_cooldowns: Array
@@ -63,7 +63,7 @@ func move(delta: float, direction: Vector3, jumping: bool) -> void:
 
 puppetsync func rotate_smoothly_to(y_radians: float) -> void:
 	# warning-ignore:return_value_discarded
-	_rotation_tween.interpolate_property(mesh_instance, "rotation:y", mesh_instance.rotation.y,
+	_rotation_tween.interpolate_property(_mesh_instance, "rotation:y", _mesh_instance.rotation.y,
 			y_radians, 0.1, Tween.TRANS_SINE, Tween.EASE_OUT)
 	# warning-ignore:return_value_discarded
 	_rotation_tween.interpolate_property(_collision, "rotation:y", _collision.rotation.y,
@@ -140,6 +140,14 @@ func respawn(position: Vector3) -> void:
 	# TODO 4.0: Remove extra self
 	self.health = max_health
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+func get_projectile_spawn_pos() -> Position3D:
+	return _projectile_spawn_pos
+
+
+func get_mesh_instance() -> MeshInstance:
+	return _mesh_instance
 
 
 # TODO 4.0: Use BaseController return type (cyclic dependency)
