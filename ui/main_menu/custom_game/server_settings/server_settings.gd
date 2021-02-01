@@ -102,7 +102,7 @@ func _on_gamemode_changed(idx: int) -> void:
 
 
 func _confirm_settings() -> void:
-	GameSession.gamemode = _mode_button.get_selected_metadata()
+	GameSession.gamemode = _mode_button.get_selected_metadata().new()
 	GameSession.map = _map.instance()
 	for i in range(_additional_settings_idx, _vbox.get_child_count()):
 		_vbox.get_child(i).confirm_settings()
