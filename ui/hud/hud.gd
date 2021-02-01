@@ -9,7 +9,8 @@ onready var _hp_bar: ValueBar = $VBox/HBox/HPBar
 
 
 func _ready() -> void:
-	var hero: BaseHero = GameSession.get_current_player().get_controller().character
+	var controller: BaseController = GameSession.get_current_player().get_controller()
+	var hero: BaseHero = controller.character
 	for i in _abilities.get_child_count():
 		var ability_hud: AbilityHUD = _abilities.get_child(i)
 		ability_hud.set_action(PlayerController.ABILITY_ACTIONS[i])
@@ -21,5 +22,5 @@ func _ready() -> void:
 
 
 	# warning-ignore:return_value_discarded
-	hero.connect("health_changed", _hp_bar, "set_value_smoothly")
+	controller.connect("health_changed", _hp_bar, "set_value_smoothly")
 	_hp_bar.reset(hero.health, hero.max_health)

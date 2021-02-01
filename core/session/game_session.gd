@@ -20,10 +20,6 @@ puppetsync func start_game() -> void:
 		hero.set_name("Player" + str(player.get_network_master()))
 		map.add_child(hero)
 		player.get_controller().character = hero
-		# warning-ignore:return_value_discarded
-		hero.connect("died", self, "_on_hero_died", [hero])
-		# warning-ignore:return_value_discarded
-		hero.connect("health_modified", self, "_on_health_modified")
 	emit_signal("started")
 
 
@@ -37,6 +33,12 @@ func add_player(player: Player) -> void:
 	add_child(player.get_controller())
 	if player.get_network_master() == get_tree().get_network_unique_id():
 		_current_player = player
+
+	var controller: BaseController = player.get_controller()
+	# warning-ignore:return_value_discarded
+	controller.connect("died", self, "_on_hero_died", [controller])
+	# warning-ignore:return_value_discarded
+	controller.connect("health_modified", self, "_on_health_modified")
 
 
 func get_player(idx: int) -> Player:
@@ -60,18 +62,18 @@ func get_team(idx: int) -> Team:
 	return _teams[idx]
 
 
-func _on_hero_died(by: BaseHero, who: BaseHero) -> void:
-	var player_by: Player = by.get_controller().get_player()
+func _on_hero_died(by: BaseController, dead_owner: BaseController) -> void:
+	var player_by: Player = by.get_player()
 	player_by.get_statistic().kills += 1
 	player_by.get_team().get_statistic().kills += 1
 
-	var player_who: Player = who.get_controller().get_player()
+	var player_who: Player = dead_owner.get_player()
 	player_who.get_statistic().kills += 1
 	player_who.get_team().get_statistic().kills += 1
 
 
-func _on_health_modified(delta: int, by: BaseHero) -> void:
-	var player_by: Player = by.get_controller().get_player()
+func _on_health_modified(delta: int, by: BaseController) -> void:
+	var player_by: Player = by.get_player()
 	if delta < 0:
 		player_by.get_statistic().damage -= delta
 		player_by.get_team().get_statistic().damage -= delta

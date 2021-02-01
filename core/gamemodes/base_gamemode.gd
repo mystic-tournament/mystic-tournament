@@ -16,13 +16,14 @@ static func additional_settings() -> Array:
 
 func _on_session_started() -> void:
 	for i in GameSession.get_players_count():
-		var hero: BaseHero = GameSession.get_player(i).get_controller().character
+		var controller: BaseController = GameSession.get_player(i).get_controller()
 		# warning-ignore:return_value_discarded
-		hero.connect("died", self, "_on_hero_died", [hero])
+		controller.connect("died", self, "_on_hero_died", [controller])
 
 
-func _on_hero_died(_by: BaseHero, who: BaseHero) -> void:
-	who.visible = false
-	yield(GameSession.get_tree().create_timer(who.get_level()), "timeout") # TODO: Use formula
-	who.respawn(Vector3(0, 5, 0))
-	who.visible = true
+func _on_hero_died(_by: BaseController, who: BaseController) -> void:
+	var who_character: BaseHero = who.character
+	who_character.visible = false
+	yield(GameSession.get_tree().create_timer(who_character.get_level()), "timeout") # TODO: Use formula
+	who_character.respawn(Vector3(0, 5, 0))
+	who_character.visible = true
