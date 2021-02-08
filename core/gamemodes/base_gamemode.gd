@@ -1,6 +1,10 @@
 class_name BaseGamemode
 
 
+# warning-ignore:unused_signal
+signal game_over(winner)
+
+
 func _init() -> void:
 	# warning-ignore:return_value_discarded
 	GameSession.connect("started", self, "_on_session_started")
@@ -23,7 +27,5 @@ func _on_session_started() -> void:
 
 func _on_hero_died(_by: BaseController, who: BaseController) -> void:
 	var who_character: BaseHero = who.character
-	who_character.visible = false
-	yield(GameSession.get_tree().create_timer(who_character.get_level()), "timeout") # TODO: Use formula
-	who_character.respawn(Vector3(0, 5, 0))
-	who_character.visible = true
+	# warning-ignore:return_value_discarded
+	GameSession.get_tree().create_timer(1).connect("timeout", who_character, "respawn", [Vector3(0, 5, 0)])

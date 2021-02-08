@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/main_menu/exit_dialog.gd"
 }, {
+"base": "ColorRect",
+"class": "FadeRect",
+"language": "GDScript",
+"path": "res://ui/fade_rect/fade_rect.gd"
+}, {
 "base": "Spatial",
 "class": "FloatingText",
 "language": "GDScript",
@@ -194,11 +199,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/session/team.gd"
 }, {
-"base": "Control",
-"class": "UI",
-"language": "GDScript",
-"path": "res://ui/ui.gd"
-}, {
 "base": "Reference",
 "class": "Utils",
 "language": "GDScript",
@@ -225,6 +225,7 @@ _global_script_class_icons={
 "DirectConnectDialog": "",
 "ErrorDialog": "",
 "ExitDialog": "",
+"FadeRect": "",
 "FloatingText": "",
 "FrostBolt": "",
 "FrostPath": "",
@@ -247,7 +248,6 @@ _global_script_class_icons={
 "ServerSettings": "",
 "Statistic": "",
 "Team": "",
-"UI": "",
 "Utils": "",
 "ValueBar": ""
 }

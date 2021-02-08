@@ -11,11 +11,7 @@ enum Columns {
 	HEALING,
 }
 
-func create_items() -> void:
-	# Create only once
-	if get_root() != null:
-		return
-
+func _ready() -> void:
 	var root: TreeItem = create_item()
 	root.set_text(Columns.KILLS, "Kills")
 	root.set_text(Columns.DEATHS, "Deaths")

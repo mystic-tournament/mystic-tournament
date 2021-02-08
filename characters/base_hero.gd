@@ -127,6 +127,7 @@ func modify_health(delta: int, by: BaseHero) -> void:
 	self.health = health + delta
 	emit_signal("health_modified", delta, by)
 	if health <= 0:
+		visible = false
 		emit_signal("died", by)
 
 
@@ -137,6 +138,7 @@ func set_health(value: int) -> void:
 
 func respawn(position: Vector3) -> void:
 	translation = position
+	visible = true
 	# TODO 4.0: Remove extra self
 	self.health = max_health
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

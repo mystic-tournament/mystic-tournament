@@ -23,6 +23,18 @@ puppetsync func start_game() -> void:
 	emit_signal("started")
 
 
+func clear() -> void:
+	# Remove all added controllers
+	for child in get_children():
+		child.free()
+
+	gamemode = null
+	_current_player = null
+	_teams.clear()
+	_players.clear()
+	map.free()
+
+
 func get_players_count() -> int:
 	return _players.size()
 
