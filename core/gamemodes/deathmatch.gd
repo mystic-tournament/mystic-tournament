@@ -2,6 +2,8 @@ class_name Deathmatch
 extends BaseGamemode
 
 
+const KillsScene: PackedScene = preload("res://ui/main_menu/custom_game/server_settings/gamemode_options/kills.tscn")
+
 var kills_to_win: int
 
 
@@ -10,7 +12,7 @@ static func name() -> String:
 
 
 static func additional_settings() -> Array:
-	return [preload("res://ui/main_menu/custom_game/server_settings/gamemode_options/kills.tscn")]
+	return [KillsScene]
 
 
 func _on_hero_died(by: BaseController, who: BaseController) -> void:

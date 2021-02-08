@@ -1,13 +1,16 @@
 class_name FloatingText
 extends Spatial
 
+
+const AileronSemibold: DynamicFont = preload("res://ui/floating_text/aileron_semibold.tres")
+
 onready var _viewport: Viewport = $Viewport
 onready var _tween: Tween = $Tween
 
 
 func show_text(damage: int) -> void:
 	var label := Label.new()
-	label.add_font_override("font", preload("res://ui/floating_text/aileron_semibold.tres"))
+	label.add_font_override("font", AileronSemibold)
 	label.set_text("%+d" % damage)
 	label.set_anchors_preset(Control.PRESET_CENTER)
 	_viewport.add_child(label)

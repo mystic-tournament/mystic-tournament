@@ -1,6 +1,12 @@
 extends Node
 
 
+const HudScene: PackedScene = preload("res://ui/hud/hud.tscn")
+const IngameMenuScene: PackedScene = preload("res://ui/ingame_menu/ingame_menu.tscn")
+const ScoreboardScene: PackedScene = preload("res://ui/scoreboard/scoreboard.tscn")
+const FadeRectScene: PackedScene = preload("res://ui/fade_rect/fade_rect.tscn")
+const MainMenuScene: PackedScene = preload("res://ui/main_menu/main_menu.tscn")
+
 var _hud: HUD
 var _ingame_menu: IngameMenu
 var _scoreboard: Scoreboard
@@ -26,15 +32,15 @@ func _on_session_started() -> void:
 	if CmdArguments.server:
 		return
 
-	_hud = preload("res://ui/hud/hud.tscn").instance()
+	_hud = HudScene.instance()
 	_ui.add_child(_hud)
 
-	_ingame_menu = preload("res://ui/ingame_menu/ingame_menu.tscn").instance()
+	_ingame_menu = IngameMenuScene.instance()
 	add_child(_ingame_menu)
 	# warning-ignore:return_value_discarded
 	_ingame_menu.connect("leave_pressed", self, "_leave_game")
 
-	_scoreboard = preload("res://ui/scoreboard/scoreboard.tscn").instance()
+	_scoreboard = ScoreboardScene.instance()
 	_ui.add_child(_scoreboard)
 
 	_chat.move_upper()
@@ -42,7 +48,7 @@ func _on_session_started() -> void:
 
 # TODO 4.0: Unbind extra _winner argument
 func _on_game_over(_winner) -> void:
-	_fade_rect = preload("res://ui/fade_rect/fade_rect.tscn").instance()
+	_fade_rect = FadeRectScene.instance()
 	add_child(_fade_rect)
 	_fade_rect.fade_out()
 	yield(_fade_rect, "finished")
@@ -62,7 +68,7 @@ func _on_game_over(_winner) -> void:
 	yield(_scoreboard, "closed")
 
 	_scoreboard.queue_free()
-	_main_menu = preload("res://ui/main_menu/main_menu.tscn").instance()
+	_main_menu = MainMenuScene.instance()
 	_ui.add_child(_main_menu)
 
 
@@ -73,5 +79,5 @@ func _leave_game() -> void:
 	_ingame_menu.queue_free()
 	_scoreboard.queue_free()
 	_chat.move_down()
-	_main_menu = preload("res://ui/main_menu/main_menu.tscn").instance()
+	_main_menu = MainMenuScene.instance()
 	_ui.add_child(_main_menu)

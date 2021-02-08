@@ -4,6 +4,8 @@ extends Node
 signal started
 signal about_to_start
 
+const AdaScene: PackedScene = preload("res://characters/ada/ada.tscn")
+
 var map: BaseMap
 var gamemode: BaseGamemode
 
@@ -14,9 +16,8 @@ var _current_player: Player
 
 puppetsync func start_game() -> void:
 	emit_signal("about_to_start")
-	var hero_scene: PackedScene = preload("res://characters/ada/ada.tscn")
 	for player in _players:
-		var hero: Ada = hero_scene.instance()
+		var hero: Ada = AdaScene.instance()
 		hero.set_name("Player" + str(player.get_network_master()))
 		map.add_child(hero)
 		player.get_controller().character = hero

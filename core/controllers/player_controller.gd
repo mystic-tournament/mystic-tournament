@@ -12,6 +12,8 @@ const ABILITY_ACTIONS = [
 	"ultimate",
 ]
 
+const PlayerCameraScene: PackedScene = preload("res://core/controllers/player_camera.tscn")
+
 var _camera: PlayerCamera
 
 var _x_strength: float
@@ -25,7 +27,7 @@ func _init(player).(player) -> void:
 
 func _ready() -> void:
 	if is_network_master():
-		_camera = preload("res://core/controllers/player_camera.tscn").instance()
+		_camera = PlayerCameraScene.instance()
 	else:
 		set_physics_process(false)
 		set_process_unhandled_input(false)
