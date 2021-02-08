@@ -111,10 +111,6 @@ puppetsync func use_ability(idx: int) -> void:
 	_abilities[idx].use(self)
 
 
-func get_level() -> int:
-	return 1 # TODO: Use internal variable
-
-
 func get_rotation_time() -> float:
 	return _rotation_tween.get_runtime()
 
