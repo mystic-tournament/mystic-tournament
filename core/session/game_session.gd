@@ -16,6 +16,8 @@ var _current_player: Player
 
 puppetsync func start_game() -> void:
 	emit_signal("about_to_start")
+	# warning-ignore:return_value_discarded
+	get_tree().network_peer.connect("peer_disconnected", self, "_on_player_disconnected")
 	for player in _players:
 		var hero: Ada = AdaScene.instance()
 		hero.set_name("Player" + str(player.get_network_master()))
@@ -73,6 +75,19 @@ func add_team(team: Team) -> void:
 
 func get_team(idx: int) -> Team:
 	return _teams[idx]
+
+
+func _on_player_disconnected(id: int) -> void:
+	for i in _players.size():
+		var player: Player = _players[i]
+		if player.get_network_master() == id:
+			_players.remove(i)
+			player.get_team().remove_player(player)
+
+			var controller: BaseController = player.get_controller()
+			controller.character.queue_free()
+			controller.queue_free()
+			return
 
 
 func _on_hero_died(by: BaseController, dead_owner: BaseController) -> void:

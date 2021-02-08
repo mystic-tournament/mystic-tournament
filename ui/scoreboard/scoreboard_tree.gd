@@ -11,7 +11,13 @@ enum Columns {
 	HEALING,
 }
 
+var _player_items: Dictionary # Contains player id as key and TreeItem as value
+
+
 func _ready() -> void:
+	# warning-ignore:return_value_discarded
+	get_tree().network_peer.connect("peer_disconnected", self, "_on_player_disconnected")
+
 	var root: TreeItem = create_item()
 	root.set_text(Columns.KILLS, "Kills")
 	root.set_text(Columns.DEATHS, "Deaths")
@@ -64,6 +70,8 @@ func _create_player_item(team_item: TreeItem, player: Player) -> void:
 	# warning-ignore:return_value_discarded
 	player.get_statistic().connect("healing_changed", self, "_on_info_changed", [player_item, Columns.HEALING])
 
+	_player_items[player.get_network_master()] = player_item
+
 
 func _disable_selection(item: TreeItem) -> void:
 	for i in range(columns):
@@ -72,3 +80,9 @@ func _disable_selection(item: TreeItem) -> void:
 
 func _on_info_changed(value: int, item: TreeItem, column: int) -> void:
 	item.set_text(column, str(value))
+
+
+func _on_player_disconnected(id: int) -> void:
+	_player_items[id].free()
+	# warning-ignore:return_value_discarded
+	_player_items.erase(id)
