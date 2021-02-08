@@ -2,6 +2,7 @@ extends Node
 
 
 var _hud: HUD
+var _ingame_menu: IngameMenu
 var _scoreboard: Scoreboard
 var _fade_rect: FadeRect
 
@@ -28,6 +29,11 @@ func _on_session_started() -> void:
 	_hud = preload("res://ui/hud/hud.tscn").instance()
 	_ui.add_child(_hud)
 
+	_ingame_menu = preload("res://ui/ingame_menu/ingame_menu.tscn").instance()
+	add_child(_ingame_menu)
+	# warning-ignore:return_value_discarded
+	_ingame_menu.connect("leave_pressed", self, "_leave_game")
+
 	_scoreboard = preload("res://ui/scoreboard/scoreboard.tscn").instance()
 	_ui.add_child(_scoreboard)
 
@@ -46,6 +52,7 @@ func _on_game_over(_winner) -> void:
 	get_tree().network_peer = null
 	GameSession.clear()
 	_hud.queue_free()
+	_ingame_menu.queue_free()
 	_scoreboard.show_final_score()
 	_chat.move_down()
 	_fade_rect.fade_in()
@@ -55,5 +62,16 @@ func _on_game_over(_winner) -> void:
 	yield(_scoreboard, "closed")
 
 	_scoreboard.queue_free()
+	_main_menu = preload("res://ui/main_menu/main_menu.tscn").instance()
+	_ui.add_child(_main_menu)
+
+
+func _leave_game() -> void:
+	get_tree().network_peer = null
+	GameSession.clear()
+	_hud.queue_free()
+	_ingame_menu.queue_free()
+	_scoreboard.queue_free()
+	_chat.move_down()
 	_main_menu = preload("res://ui/main_menu/main_menu.tscn").instance()
 	_ui.add_child(_main_menu)

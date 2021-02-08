@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/ingame_menu/ingame_menu.gd" type="Script" id=2]
+
+[node name="IngameMenu" type="Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 1, 1, 1, 0.27451 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -53.5
+margin_top = -46.0
+margin_right = 53.5
+margin_bottom = 46.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResumeButton" type="Button" parent="VBox"]
+margin_right = 107.0
+margin_bottom = 20.0
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="VBox"]
+margin_top = 24.0
+margin_right = 107.0
+margin_bottom = 44.0
+disabled = true
+text = "Settings"
+
+[node name="LeaveButton" type="Button" parent="VBox"]
+margin_top = 48.0
+margin_right = 107.0
+margin_bottom = 68.0
+text = "Leave game"
+
+[node name="ExitButton" type="Button" parent="VBox"]
+margin_top = 72.0
+margin_right = 107.0
+margin_bottom = 92.0
+text = "Exit to desktop"
+[connection signal="pressed" from="VBox/ResumeButton" to="." method="hide"]
+[connection signal="pressed" from="VBox/LeaveButton" to="." method="_leave"]
+[connection signal="pressed" from="VBox/ExitButton" to="." method="_exit_to_desktop"]
