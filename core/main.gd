@@ -60,8 +60,9 @@ func _end_session(winner = null) -> void:
 
 	if CmdArguments.server:
 		get_tree().quit()
-	else:
-		get_tree().network_peer.disconnect("server_disconnected", self, "_on_server_disconnected")
+		return
+
+	get_tree().network_peer.disconnect("server_disconnected", self, "_on_server_disconnected")
 	get_tree().network_peer = null
 	GameSession.clear()
 	_hud.queue_free()
