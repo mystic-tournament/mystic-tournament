@@ -2,7 +2,7 @@ class_name FloatingText
 extends Spatial
 
 
-const AileronSemibold: DynamicFont = preload("res://ui/floating_text/aileron_semibold.tres")
+const AileronSemibold: DynamicFont = preload("res://ui/game_session/floating_text/aileron_semibold.tres")
 
 onready var _viewport: Viewport = $Viewport
 onready var _tween: Tween = $Tween

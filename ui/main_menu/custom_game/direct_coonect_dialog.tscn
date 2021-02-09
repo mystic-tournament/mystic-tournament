@@ -1,8 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://ui/main_menu/custom_game/dialogs/direct_coonect_dialog.gd" type="Script" id=1]
-
-
+[ext_resource path="res://ui/main_menu/custom_game/direct_coonect_dialog.gd" type="Script" id=1]
 
 
 [node name="DirectConnectDialog" type="ConfirmationDialog"]

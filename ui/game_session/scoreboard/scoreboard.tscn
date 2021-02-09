@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://ui/scoreboard/scoreboard.gd" type="Script" id=1]
-[ext_resource path="res://ui/scoreboard/scoreboard_tree.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/game_session/scoreboard/scoreboard.gd" type="Script" id=1]
+[ext_resource path="res://ui/game_session/scoreboard/scoreboard_tree.tscn" type="PackedScene" id=2]
+
 
 [node name="Scoreboard" type="WindowDialog"]
 anchor_right = 1.0

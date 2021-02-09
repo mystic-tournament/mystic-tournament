@@ -1,10 +1,10 @@
 extends Node
 
 
-const HudScene: PackedScene = preload("res://ui/hud/hud.tscn")
-const IngameMenuScene: PackedScene = preload("res://ui/ingame_menu/ingame_menu.tscn")
-const ScoreboardScene: PackedScene = preload("res://ui/scoreboard/scoreboard.tscn")
-const FadeRectScene: PackedScene = preload("res://ui/fade_rect/fade_rect.tscn")
+const HudScene: PackedScene = preload("res://ui/game_session/hud/hud.tscn")
+const IngameMenuScene: PackedScene = preload("res://ui/game_session/ingame_menu.tscn")
+const ScoreboardScene: PackedScene = preload("res://ui/game_session/scoreboard/scoreboard.tscn")
+const FadeRectScene: PackedScene = preload("res://ui/fade_rect.tscn")
 const MainMenuScene: PackedScene = preload("res://ui/main_menu/main_menu.tscn")
 
 var _hud: HUD
@@ -28,7 +28,7 @@ func _on_session_started() -> void:
 	add_child(GameSession.map)
 
 	# warning-ignore:return_value_discarded
-	GameSession.gamemode.connect("game_over", self, "_end_game")
+	GameSession.gamemode.connect("game_over", self, "_end_session")
 
 	if CmdArguments.server:
 		return
@@ -42,7 +42,7 @@ func _on_session_started() -> void:
 	_ingame_menu = IngameMenuScene.instance()
 	add_child(_ingame_menu)
 	# warning-ignore:return_value_discarded
-	_ingame_menu.connect("leave_pressed", self, "_end_game")
+	_ingame_menu.connect("leave_pressed", self, "_end_session")
 
 	_scoreboard = ScoreboardScene.instance()
 	_ui.add_child(_scoreboard)
@@ -51,7 +51,7 @@ func _on_session_started() -> void:
 
 
 # Show animation and scoreboard on normal termination (winner != null), otherwise just close the game session
-func _end_game(winner = null) -> void:
+func _end_session(winner = null) -> void:
 	if winner:
 		_fade_rect = FadeRectScene.instance()
 		add_child(_fade_rect)
@@ -83,5 +83,5 @@ func _end_game(winner = null) -> void:
 
 
 func _on_server_disconnected() -> void:
-	_end_game()
+	_end_session()
 	_error_dialog.show_error("You have been disconnected from the server")

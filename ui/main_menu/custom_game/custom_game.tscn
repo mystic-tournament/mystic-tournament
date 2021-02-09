@@ -3,9 +3,13 @@
 [ext_resource path="res://ui/main_menu/custom_game/custom_game.gd" type="Script" id=1]
 [ext_resource path="res://ui/main_menu/custom_game/server_settings/server_settings.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/main_menu/custom_game/lobby_tree/lobby_tree.gd" type="Script" id=3]
-[ext_resource path="res://ui/main_menu/custom_game/dialogs/connection_dialog.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/main_menu/custom_game/connection_dialog.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/error_dialog.gd" type="Script" id=5]
-[ext_resource path="res://ui/main_menu/custom_game/dialogs/direct_coonect_dialog.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/main_menu/custom_game/direct_coonect_dialog.tscn" type="PackedScene" id=7]
+
+
+
+
 
 
 [node name="CustomGame" type="HBoxContainer"]

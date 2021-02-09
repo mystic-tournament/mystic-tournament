@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "TextureRect",
 "class": "AbilityHUD",
 "language": "GDScript",
-"path": "res://ui/hud/ability_hud.gd"
+"path": "res://ui/game_session/hud/ability_hud.gd"
 }, {
 "base": "BaseHero",
 "class": "Ada",
@@ -52,12 +52,12 @@ _global_script_classes=[ {
 "base": "VBoxContainer",
 "class": "Chat",
 "language": "GDScript",
-"path": "res://ui/chat/chat.gd"
+"path": "res://ui/chat.gd"
 }, {
 "base": "WindowDialog",
 "class": "ConnectionDialog",
 "language": "GDScript",
-"path": "res://ui/main_menu/custom_game/dialogs/connection_dialog.gd"
+"path": "res://ui/main_menu/custom_game/connection_dialog.gd"
 }, {
 "base": "Reference",
 "class": "ControlUtils",
@@ -72,7 +72,7 @@ _global_script_classes=[ {
 "base": "ConfirmationDialog",
 "class": "DirectConnectDialog",
 "language": "GDScript",
-"path": "res://ui/main_menu/custom_game/dialogs/direct_coonect_dialog.gd"
+"path": "res://ui/main_menu/custom_game/direct_coonect_dialog.gd"
 }, {
 "base": "AcceptDialog",
 "class": "ErrorDialog",
@@ -87,12 +87,12 @@ _global_script_classes=[ {
 "base": "ColorRect",
 "class": "FadeRect",
 "language": "GDScript",
-"path": "res://ui/fade_rect/fade_rect.gd"
+"path": "res://ui/fade_rect.gd"
 }, {
 "base": "Spatial",
 "class": "FloatingText",
 "language": "GDScript",
-"path": "res://ui/floating_text/floating_text.gd"
+"path": "res://ui/game_session/floating_text/floating_text.gd"
 }, {
 "base": "BaseAbility",
 "class": "FrostBolt",
@@ -117,12 +117,12 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "HUD",
 "language": "GDScript",
-"path": "res://ui/hud/hud.gd"
+"path": "res://ui/game_session/hud/hud.gd"
 }, {
 "base": "Control",
 "class": "IngameMenu",
 "language": "GDScript",
-"path": "res://ui/ingame_menu/ingame_menu.gd"
+"path": "res://ui/game_session/ingame_menu.gd"
 }, {
 "base": "BaseGamemode",
 "class": "KillGiant",
@@ -182,12 +182,12 @@ _global_script_classes=[ {
 "base": "WindowDialog",
 "class": "Scoreboard",
 "language": "GDScript",
-"path": "res://ui/scoreboard/scoreboard.gd"
+"path": "res://ui/game_session/scoreboard/scoreboard.gd"
 }, {
 "base": "Tree",
 "class": "ScoreboardTree",
 "language": "GDScript",
-"path": "res://ui/scoreboard/scoreboard_tree.gd"
+"path": "res://ui/game_session/scoreboard/scoreboard_tree.gd"
 }, {
 "base": "PanelContainer",
 "class": "ServerSettings",
@@ -212,7 +212,7 @@ _global_script_classes=[ {
 "base": "TextureProgress",
 "class": "ValueBar",
 "language": "GDScript",
-"path": "res://ui/hud/value_bar.gd"
+"path": "res://ui/game_session/hud/value_bar.gd"
 } ]
 _global_script_class_icons={
 "AbilityHUD": "",

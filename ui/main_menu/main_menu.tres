@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=3 format=2]
 
 [sub_resource type="DynamicFontData" id=1]
-font_path = "res://ui/fonts/Soniano Sans Unicode Regular.ttf"
+font_path = "res://ui/main_menu/soniano_sans_unicode_regular.ttf"
 
 [sub_resource type="DynamicFont" id=2]
 size = 56

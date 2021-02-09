@@ -1,6 +1,9 @@
 [gd_resource type="DynamicFont" load_steps=2 format=2]
 
-[ext_resource path="res://ui/floating_text/aileron_semibold.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://ui/game_session/floating_text/aileron_semibold.otf" type="DynamicFontData" id=1]
+
+
+
 
 [resource]
 size = 42

@@ -3,7 +3,7 @@
 [ext_resource path="res://ui/error_dialog.gd" type="Script" id=1]
 [ext_resource path="res://ui/main_menu/main_menu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://core/main.gd" type="Script" id=3]
-[ext_resource path="res://ui/chat/chat.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/chat.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="Node"]
 script = ExtResource( 3 )
