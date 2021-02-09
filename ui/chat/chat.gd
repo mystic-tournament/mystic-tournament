@@ -15,7 +15,7 @@ func _ready() -> void:
 	# warning-ignore:return_value_discarded
 	get_tree().connect("connected_to_server", self, "_display_message", ["gray", "You joined the game."])
 	# warning-ignore:return_value_discarded
-	get_tree().connect("server_disconnected", self, "_display_message", ["gray", "You left the game."])
+	get_tree().connect("server_disconnected", self, "_display_message", ["gray", "You have been disconnected from the server."])
 	# warning-ignore:return_value_discarded
 	_input_field.connect("focus_exited", _animation_player, "play", ["hide_background"])
 

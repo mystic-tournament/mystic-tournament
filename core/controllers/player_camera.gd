@@ -17,6 +17,11 @@ func _ready() -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+
 func _process(_delta: float) -> void:
 	var vertical_axis: float = Input.get_joy_axis(0, JOY_AXIS_2)
 	if abs(vertical_axis) > AXIS_DEADZONE:

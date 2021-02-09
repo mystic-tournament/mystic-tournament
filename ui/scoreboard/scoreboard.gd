@@ -21,7 +21,6 @@ func _input(event: InputEvent) -> void:
 
 
 func show_final_score() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	set_process_input(false)
 	_close_button.show()
 	show()

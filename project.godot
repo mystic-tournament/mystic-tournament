@@ -77,7 +77,7 @@ _global_script_classes=[ {
 "base": "AcceptDialog",
 "class": "ErrorDialog",
 "language": "GDScript",
-"path": "res://ui/main_menu/custom_game/dialogs/error_dialog.gd"
+"path": "res://ui/error_dialog.gd"
 }, {
 "base": "ConfirmationDialog",
 "class": "ExitDialog",

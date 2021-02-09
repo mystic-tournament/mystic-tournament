@@ -13,6 +13,7 @@ var _scoreboard: Scoreboard
 var _fade_rect: FadeRect
 
 onready var _ui: Control = $UI
+onready var _error_dialog: ErrorDialog = $UI/ErrorDialog
 onready var _main_menu: MainMenu = $UI/MainMenu
 onready var _chat: Chat = $UI/Chat
 
@@ -31,6 +32,9 @@ func _on_session_started() -> void:
 
 	if CmdArguments.server:
 		return
+
+	# warning-ignore:return_value_discarded
+	get_tree().network_peer.connect("server_disconnected", self, "_on_server_disconnected", [], CONNECT_DEFERRED)
 
 	_hud = HudScene.instance()
 	_ui.add_child(_hud)
@@ -56,6 +60,8 @@ func _end_game(winner = null) -> void:
 
 	if CmdArguments.server:
 		get_tree().quit()
+	else:
+		get_tree().network_peer.disconnect("server_disconnected", self, "_on_server_disconnected")
 	get_tree().network_peer = null
 	GameSession.clear()
 	_hud.queue_free()
@@ -68,7 +74,14 @@ func _end_game(winner = null) -> void:
 		yield(_fade_rect, "finished")
 		_fade_rect.queue_free()
 		yield(_scoreboard, "closed")
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 	_scoreboard.queue_free()
 	_main_menu = MainMenuScene.instance()
 	_ui.add_child(_main_menu)
+
+
+func _on_server_disconnected() -> void:
+	_end_game()
+	_error_dialog.show_error("You have been disconnected from the server")
