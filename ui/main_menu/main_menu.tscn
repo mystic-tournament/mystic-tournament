@@ -32,51 +32,51 @@ __meta__ = {
 
 [node name="PlayButton" type="Button" parent="Buttons"]
 margin_right = 352.0
-margin_bottom = 8.0
+margin_bottom = 54.0
 disabled = true
 text = "Play"
 flat = true
 align = 0
 
 [node name="CustomGameButton" type="Button" parent="Buttons"]
-margin_top = 12.0
+margin_top = 58.0
 margin_right = 352.0
-margin_bottom = 20.0
+margin_bottom = 112.0
 text = "Custom game"
 flat = true
 align = 0
 
 [node name="CharactersButton" type="Button" parent="Buttons"]
-margin_top = 24.0
+margin_top = 116.0
 margin_right = 352.0
-margin_bottom = 32.0
+margin_bottom = 170.0
 disabled = true
 text = "Characters"
 flat = true
 align = 0
 
 [node name="ProfileButton" type="Button" parent="Buttons"]
-margin_top = 36.0
+margin_top = 174.0
 margin_right = 352.0
-margin_bottom = 44.0
+margin_bottom = 228.0
 disabled = true
 text = "Profile"
 flat = true
 align = 0
 
 [node name="SettingsButton" type="Button" parent="Buttons"]
-margin_top = 48.0
+margin_top = 232.0
 margin_right = 352.0
-margin_bottom = 56.0
+margin_bottom = 286.0
 disabled = true
 text = "Settings"
 flat = true
 align = 0
 
 [node name="ExitButton" type="Button" parent="Buttons"]
-margin_top = 60.0
+margin_top = 290.0
 margin_right = 352.0
-margin_bottom = 68.0
+margin_bottom = 344.0
 text = "Exit"
 flat = true
 align = 0
@@ -102,5 +102,6 @@ window_title = "Please confirm exit"
 dialog_text = "Do you want to quit the game?"
 script = ExtResource( 4 )
 [connection signal="pressed" from="Buttons/CustomGameButton" to="." method="_open" binds= [ "CustomGame" ]]
+[connection signal="pressed" from="Buttons/ExitButton" to="." method="_exit"]
 [connection signal="pressed" from="BackButton" to="." method="_back"]
 [connection signal="confirmed" from="ExitDialog" to="ExitDialog" method="_exit"]
