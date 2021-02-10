@@ -27,14 +27,16 @@ func _on_session_started() -> void:
 	_main_menu.queue_free()
 	add_child(GameSession.map)
 
-	# warning-ignore:return_value_discarded
-	GameSession.gamemode.connect("game_over", self, "_end_session")
-
 	if CmdArguments.server:
+		# warning-ignore:return_value_discarded
+		GameSession.gamemode.connect("game_over", self, "_wait_for_peers_and_shutdown")
 		return
 
 	# warning-ignore:return_value_discarded
-	get_tree().network_peer.connect("server_disconnected", self, "_on_server_disconnected", [], CONNECT_DEFERRED)
+	GameSession.gamemode.connect("game_over", self, "_end_session")
+
+	# warning-ignore:return_value_discarded
+	get_tree().network_peer.connect("server_disconnected", self, "_on_server_disconnected")
 
 	_hud = HudScene.instance()
 	_ui.add_child(_hud)
@@ -58,11 +60,6 @@ func _end_session(winner = null) -> void:
 		_fade_rect.fade_out()
 		yield(_fade_rect, "finished")
 
-	if CmdArguments.server:
-		get_tree().quit()
-		return
-
-	get_tree().network_peer.disconnect("server_disconnected", self, "_on_server_disconnected")
 	get_tree().network_peer = null
 	GameSession.clear()
 	_hud.queue_free()
@@ -86,3 +83,10 @@ func _end_session(winner = null) -> void:
 func _on_server_disconnected() -> void:
 	_end_session()
 	_error_dialog.show_error("You have been disconnected from the server")
+
+
+# TODO 4.0: Unbind extra _winner
+func _wait_for_peers_and_shutdown(_winner) -> void:
+	while not get_tree().get_network_connected_peers().empty():
+		yield(get_tree().network_peer, "peer_disconnected")
+	get_tree().quit()
