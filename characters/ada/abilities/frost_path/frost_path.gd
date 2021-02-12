@@ -9,7 +9,7 @@ const HEIGHT_GAP: float = 0.02 # To avoid colliding on spawn
 
 
 func _init() -> void:
-	cooldown = 4
+	_cooldown = AbilityCooldown.new(4)
 
 
 func use(caster: BaseHero) -> void:

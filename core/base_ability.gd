@@ -2,15 +2,15 @@ class_name BaseAbility
 
 
 signal used
-signal cooldown_changed
 
-var cooldown: int
+var _cooldown: AbilityCooldown
 
 
 func use(_caster: BaseHero) -> void:
+	if _cooldown:
+		_cooldown.start()
 	emit_signal("used")
 
 
-func set_cooldown(value: int) -> void:
-	cooldown = value
-	emit_signal("cooldown_changed")
+func get_cooldown() -> AbilityCooldown:
+	return _cooldown

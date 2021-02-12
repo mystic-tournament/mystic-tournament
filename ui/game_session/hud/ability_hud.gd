@@ -2,13 +2,17 @@ class_name AbilityHUD
 extends TextureRect
 
 
+var ability: BaseAbility setget set_ability
+var action: String setget set_action
+
 onready var _key_label: Label = $KeyLabel
 onready var _cooldown_progress: TextureProgress = $CooldownProgress
 onready var _cooldown_label: NumericLabel = $CooldownLabel
 onready var _tween: Tween = $Tween
 
 
-func set_action(action: String) -> void:
+func set_action(new_action: String) -> void:
+	action = new_action
 	var event = InputMap.get_action_list(action).front()
 	if event is InputEventMouseButton:
 		match event.button_index:
@@ -22,12 +26,23 @@ func set_action(action: String) -> void:
 		assert("Unknown event type")
 
 
-func set_ability(ability: BaseAbility) -> void:
-	if ability != null:
-		texture = load(Utils.get_script_icon(ability.script))
+func set_ability(new_ability: BaseAbility) -> void:
+	if ability:
+		ability.get_cooldown().disconnect("started", self, "_display_cooldown")
+	ability = new_ability
+
+	if not ability:
+		return
+
+	texture = load(Utils.get_script_icon(ability.script))
+
+	var cooldown: AbilityCooldown = ability.get_cooldown()
+	if cooldown:
+		# warning-ignore:return_value_discarded
+		cooldown.connect("started", self, "_display_cooldown")
 
 
-func display_cooldown(time: float) -> void:
+func _display_cooldown(time: float) -> void:
 	_cooldown_progress.max_value = time
 
 	# Animation

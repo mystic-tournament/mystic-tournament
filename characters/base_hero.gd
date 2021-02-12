@@ -27,7 +27,6 @@ var _projectile_spawn_pos: Position3D
 var _mesh_instance: MeshInstance
 var _motion: Vector3
 var _abilities: Array
-var _ability_cooldowns: Array
 # TODO 4.0: Use BaseController type (cyclic dependency)
 var _controller
 
@@ -38,7 +37,6 @@ onready var _collision: CollisionShape = $Collision
 
 func _init() -> void:
 	_abilities.resize(Abilities.size())
-	_ability_cooldowns.resize(Abilities.size())
 	rset_config("global_transform", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
@@ -76,18 +74,7 @@ puppetsync func rotate_smoothly_to(y_radians: float) -> void:
 func set_ability(idx: int, ability) -> void:
 	assert(ability, "Ability cannot be null")
 	assert(_abilities[idx] == null, "Ability cannot be set twice")
-
 	_abilities[idx] = ability
-	if ability.cooldown != 0:
-		var cooldown_timer := GameTimer.new()
-		cooldown_timer.wait_time = ability.cooldown
-		cooldown_timer.one_shot = true
-		_ability_cooldowns[idx] = cooldown_timer
-		add_child(cooldown_timer)
-		# warning-ignore:return_value_discarded
-		ability.connect("used", cooldown_timer, "start")
-		# warning-ignore:return_value_discarded
-		ability.connect("cooldown_changed", cooldown_timer, "set_wait_time")
 	emit_signal("ability_changed", idx, ability)
 
 
@@ -96,15 +83,11 @@ func get_ability(idx: int):
 	return _abilities[idx]
 
 
-func get_ability_cooldown(idx: int) -> GameTimer:
-	return _ability_cooldowns[idx]
-
-
 func can_use_ability(idx: int) -> bool:
 	if _abilities[idx] == null:
 		return false
-	var cooldown_timer: GameTimer = _ability_cooldowns[idx]
-	return not cooldown_timer or cooldown_timer.is_stopped()
+	var cooldown: AbilityCooldown = _abilities[idx].get_cooldown()
+	return not cooldown or cooldown.is_stopped()
 
 
 puppetsync func use_ability(idx: int) -> void:

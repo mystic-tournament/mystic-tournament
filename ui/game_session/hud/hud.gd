@@ -13,14 +13,8 @@ func _ready() -> void:
 	var hero: BaseHero = controller.character
 	for i in _abilities.get_child_count():
 		var ability_hud: AbilityHUD = _abilities.get_child(i)
-		ability_hud.set_action(PlayerController.ABILITY_ACTIONS[i])
-		ability_hud.set_ability(hero.get_ability(i))
-
-		var ability_cooldown: GameTimer = hero.get_ability_cooldown(i)
-		if ability_cooldown:
-			# warning-ignore:return_value_discarded
-			ability_cooldown.connect("started", ability_hud, "display_cooldown")
-
+		ability_hud.action = PlayerController.ABILITY_ACTIONS[i]
+		ability_hud.ability = hero.get_ability(i)
 
 	# warning-ignore:return_value_discarded
 	controller.connect("health_changed", _hp_bar, "set_value_smoothly")
